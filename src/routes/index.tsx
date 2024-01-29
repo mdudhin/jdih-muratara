@@ -1,4 +1,5 @@
 import DashboardPage from "../pages/admin/dashboard";
+import DetailPeraturanPage from "@/pages/admin/peraturan/detail";
 import HomePage from "../pages/user/home";
 import LayoutAdmin from "../layout/admin";
 import LoginPage from "../pages/auth/login";
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
           {
             path: "peraturan",
             element: <PeraturanPage />,
+          },
+          {
+            path: "peraturan/detail/:action",
+            element: <DetailPeraturanPage />,
           },
         ],
       },
