@@ -8,7 +8,7 @@ export const peraturanSchema = z.object({
   judul: z.string().min(1, "Judul is required"),
   nomorPeraturan: z.string().min(1, "Nomor peraturan is required"),
   tahun: z.string().min(1, "Tahun is required"),
-  tempatPenetapan: z.string().min(1, "Tempat penetapan is required"),
+  tempatPenetapan: z.string(),
   tanggalPenetapan: z.string().min(1, "Tanggal penetapan is required"),
   penandatanganan: z.string(),
   tanggalPengundangan: z.string(),
@@ -23,7 +23,7 @@ export const peraturanSchema = z.object({
       (file) => ACCEPTED_PDF_TYPES.includes(file?.[0]?.type),
       "Only .pdf formats are supported"
     )
-    .refine((file) => file[0]?.size <= 10000000, `Max image size is 10MB`)
+    .refine((file) => file[0]?.size <= 10000000, `Max PDF size is 10MB`)
     .optional()
     .or(z.literal("")),
 });

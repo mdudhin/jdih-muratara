@@ -7,13 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/shared/custom-formfield";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const DetailPeraturan = () => {
   const navigate = useNavigate();
   const { action } = useParams();
+  const [pdfUrl, setPdfUrl] = useState<string>("");
 
   const form = useForm<PeraturanSchema>({
     resolver: zodResolver(peraturanSchema),
@@ -42,11 +43,21 @@ const DetailPeraturan = () => {
     },
   });
 
+  const fileWatcher = form.watch("file");
+
+  useEffect(() => {
+    if (fileWatcher?.length > 0) {
+      setPdfUrl(URL.createObjectURL(fileWatcher?.[0]));
+    }
+  }, [fileWatcher]);
+
   return (
     <ScrollArea>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(() => {})}
+          onSubmit={form.handleSubmit(() => {
+            console.log("tr");
+          })}
           className="m-10 flex flex-col gap-5"
         >
           <CustomFormField
@@ -120,7 +131,7 @@ const DetailPeraturan = () => {
               <Input
                 {...field}
                 placeholder="Nomor Peraturan"
-                type="text"
+                type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
                 className=" w-full rounded-sm bg-tblueLight p-3 text-gray-800 placeholder:text-gray-800"
@@ -137,7 +148,7 @@ const DetailPeraturan = () => {
               <Input
                 {...field}
                 placeholder="Tahun"
-                type="text"
+                type="number"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
                 className=" w-full rounded-sm bg-tblueLight p-3 text-gray-800 placeholder:text-gray-800"
@@ -283,12 +294,22 @@ const DetailPeraturan = () => {
           >
             {() => (
               <>
-                <div className="flex w-full justify-center"></div>
+                <div className="flex w-full justify-center">
+                  {pdfUrl && (
+                    <embed
+                      src={pdfUrl}
+                      type="application/pdf"
+                      width="100%"
+                      height="500px"
+                    />
+                  )}
+                </div>
                 <Input
                   {...form.register("file")}
                   id="image"
                   type="file"
                   accept="application/pdf"
+                  required
                 />
               </>
             )}
