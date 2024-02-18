@@ -1,29 +1,27 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import Loading from "../components/shared/Loading";
+import { useToken } from "@/utils/context/token";
 
 const ProtectedRoutes = () => {
-  //   const { pathname } = useLocation();
+  const { pathname } = useLocation();
 
-  //   const authProtected = ["/login", "/register"];
+  const { token } = useToken();
 
-  //   const { token, user } = useToken();
+  const authProtected = ["/login", "/register"];
+  const tokenProtected = [
+    "/admin",
+    "/admin/peraturan",
+    "/admin/peraturan/detail/:action",
+  ];
 
-  //   if (authProtected.includes(pathname)) {
-  //     if (token) {
-  //       return <Navigate to={"/"} />;
-  //     }
-  //   }
+  if (authProtected.includes(pathname)) {
+    if (token) return <Navigate to="/" />;
+  }
 
-  //   if (user === null) {
-  //     return <Loading />;
-  //   } else {
-  //     if (pathname.includes("/admin")) {
-  //       if (user.role !== "admin") {
-  //         return <Navigate to={"/"} />;
-  //       }
-  //     }
-  //   }
+  if (tokenProtected.includes(pathname)) {
+    if (!token) return <Navigate to="/login" />;
+  }
 
   return <Outlet />;
 };

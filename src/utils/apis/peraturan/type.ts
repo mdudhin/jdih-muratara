@@ -29,3 +29,22 @@ export const peraturanSchema = z.object({
 });
 
 export type PeraturanSchema = z.infer<typeof peraturanSchema>;
+
+export interface Peraturan {
+  id: string;
+  jenis_peraturan: string;
+  bentuk_peraturan: string;
+  judul: string;
+  no_peraturan: string;
+  tahun: string;
+  tmpt_penetapan: string;
+  tgl_penetapan: string;
+  penandatanganan: string;
+  tgl_penandatanganan: string;
+  pemrakarsa: string;
+  sumber: string;
+  status: string;
+  file: string;
+  createdAt: string;
+  updatedAt: string;
+}

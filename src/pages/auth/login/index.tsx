@@ -12,23 +12,39 @@ import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/shared/custom-formfield";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { postLogin } from "@/utils/apis/auth/api";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/components/ui/use-toast";
+import { useToken } from "@/utils/context/token";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
-  // const { toast } = useToast();
-  // const { changeToken } = useToken();
+  const { toast } = useToast();
+  const { changeToken } = useToken();
   const navigate = useNavigate();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
   const handleLogin = async (data: LoginSchema) => {
-    console.log(data);
+    try {
+      const result = await postLogin(data);
+
+      changeToken(result.token);
+
+      navigate("/admin");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+    }
   };
   return (
     <div className="flex flex-col justify-center items-center h-screen">
@@ -43,14 +59,14 @@ const LoginPage = () => {
             <CardContent className="space-y-2">
               <CustomFormField
                 control={form.control}
-                name="email"
-                label="Email"
+                name="username"
+                label="Username"
               >
                 {(field) => (
                   <Input
                     {...field}
-                    placeholder="mail@domain.com"
-                    type="email"
+                    placeholder="username"
+                    type="text"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
                     className="border-tyellow focus-visible:ring-tyellow"
