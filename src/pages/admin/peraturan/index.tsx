@@ -94,7 +94,9 @@ const PeraturanPage = () => {
     try {
       const response = await getPeraturan();
       setData(response);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -110,9 +112,9 @@ const PeraturanPage = () => {
         columns={columns}
         data={data}
         filter={[
-          { label: "Title Peraturan", value: "titlePeraturan" },
-          { label: "Type Peraturan", value: "typePeraturan" },
-          { label: "Tahun", value: "year" },
+          { label: "Title Peraturan", value: "judul" },
+          { label: "Type Peraturan", value: "jenis_peraturan" },
+          { label: "Tahun", value: "tahun" },
           { label: "Status Peraturan", value: "status" },
         ]}
       />

@@ -17,33 +17,51 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createPeraturan } from "@/utils/apis/peraturan/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const DetailPeraturan = () => {
   const navigate = useNavigate();
   // const { action } = useParams();
   const [pdfUrl, setPdfUrl] = useState<string>("");
+  const { toast } = useToast();
 
   const form = useForm<PeraturanSchema>({
     resolver: zodResolver(peraturanSchema),
     defaultValues: {
-      jenisPeraturan: "",
-      bentukPeraturan: "",
+      jenis_peraturan: "",
+      bentuk_peraturan: "",
       judul: "",
-      nomorPeraturan: "",
+      no_peraturan: "",
       tahun: "",
-      tempatPenetapan: "",
-      tanggalPenetapan: "",
+      tmpt_penetapan: "",
+      tgl_penetapan: "",
       penandatanganan: "",
-      tanggalPengundangan: "",
+      tgl_penandatanganan: "",
       pemrakarsa: "",
       sumber: "",
       status: "",
-      note: "",
+      /* note: "", */
       file: "",
     },
   });
 
   const fileWatcher = form.watch("file");
+
+  const handleCreatePeraturan = async (body: PeraturanSchema) => {
+    try {
+      const response = await createPeraturan(body);
+      toast({
+        description: response.message,
+      });
+      navigate("/admin/peraturan");
+    } catch (error) {
+      toast({
+        description: (error as Error).message,
+        variant: "destructive",
+      });
+    }
+  };
 
   useEffect(() => {
     if (fileWatcher?.length > 0) {
@@ -55,14 +73,12 @@ const DetailPeraturan = () => {
     <ScrollArea>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(() => {
-            console.log("tr");
-          })}
+          onSubmit={form.handleSubmit(handleCreatePeraturan)}
           className="m-10 flex flex-col gap-5"
         >
           <CustomFormField
             control={form.control}
-            name="jenisPeraturan"
+            name="jenis_peraturan"
             label="Jenis Peraturan"
             required
           >
@@ -90,7 +106,7 @@ const DetailPeraturan = () => {
           </CustomFormField>
           <CustomFormField
             control={form.control}
-            name="bentukPeraturan"
+            name="bentuk_peraturan"
             label="Bentuk Peraturan"
           >
             {(field) => (
@@ -123,7 +139,7 @@ const DetailPeraturan = () => {
           </CustomFormField>
           <CustomFormField
             control={form.control}
-            name="nomorPeraturan"
+            name="no_peraturan"
             label="Nomor Peraturan"
             required
           >
@@ -157,7 +173,7 @@ const DetailPeraturan = () => {
           </CustomFormField>
           <CustomFormField
             control={form.control}
-            name="tempatPenetapan"
+            name="tmpt_penetapan"
             label="Tempat Penetapan"
           >
             {(field) => (
@@ -173,7 +189,7 @@ const DetailPeraturan = () => {
           </CustomFormField>
           <CustomFormField
             control={form.control}
-            name="tanggalPenetapan"
+            name="tgl_penetapan"
             label="Tanggal Penetapan"
             required
           >
@@ -206,13 +222,13 @@ const DetailPeraturan = () => {
           </CustomFormField>
           <CustomFormField
             control={form.control}
-            name="tanggalPengundangan"
-            label="Tanggal Pengundangan"
+            name="tgl_penandatanganan"
+            label="Tanggal Penandatanganan"
           >
             {(field) => (
               <Input
                 {...field}
-                placeholder="Tanggal Pengundangan"
+                placeholder="Tanggal Penandatanganan"
                 type="date"
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
@@ -271,7 +287,7 @@ const DetailPeraturan = () => {
             )}
           </CustomFormField>
 
-          {form.getValues("status") === "Diubah" && (
+          {/* {form.getValues("status") === "Diubah" && (
             <CustomFormField control={form.control} name="note" label="Note">
               {(field) => (
                 <Input
@@ -284,7 +300,7 @@ const DetailPeraturan = () => {
                 />
               )}
             </CustomFormField>
-          )}
+          )} */}
 
           <CustomFormField
             control={form.control}
