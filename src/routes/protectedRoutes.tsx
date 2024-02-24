@@ -1,6 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-import Loading from "../components/shared/Loading";
 import { useToken } from "@/utils/context/token";
 
 const ProtectedRoutes = () => {
