@@ -3,19 +3,19 @@ import * as z from "zod";
 const ACCEPTED_PDF_TYPES = ["application/pdf"];
 
 export const peraturanSchema = z.object({
-  jenisPeraturan: z.string().min(1, "Jenis peraturan is required"),
-  bentukPeraturan: z.string(),
+  jenis_peraturan: z.string().min(1, "Jenis peraturan is required"),
+  bentuk_peraturan: z.string(),
   judul: z.string().min(1, "Judul is required"),
-  nomorPeraturan: z.string().min(1, "Nomor peraturan is required"),
+  no_peraturan: z.string().min(1, "Nomor peraturan is required"),
   tahun: z.string().min(1, "Tahun is required"),
-  tempatPenetapan: z.string(),
-  tanggalPenetapan: z.string().min(1, "Tanggal penetapan is required"),
+  tmpt_penetapan: z.string(),
+  tgl_penetapan: z.string().min(1, "Tanggal penetapan is required"),
   penandatanganan: z.string(),
-  tanggalPengundangan: z.string(),
+  tgl_penandatanganan: z.string(),
   pemrakarsa: z.string(),
   sumber: z.string(),
   status: z.string().min(1, "Status is required"),
-  note: z.string(),
+  /* note: z.string().optional(), */
   file: z
     .any()
     .refine((file) => file?.length == 1, "PDF is required.")
