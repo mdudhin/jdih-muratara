@@ -4,9 +4,11 @@ import { Outlet } from "react-router-dom";
 
 const LayoutUser = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full h-screen">
       <Navbar />
-      <Outlet />
+      <div className="flex-grow">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
