@@ -33,9 +33,7 @@ const LoginPage = () => {
   const handleLogin = async (data: LoginSchema) => {
     try {
       const result = await postLogin(data);
-
-      changeToken(result.token);
-
+      changeToken(result.id, result.token);
       navigate("/admin");
     } catch (error) {
       if (error instanceof Error) {

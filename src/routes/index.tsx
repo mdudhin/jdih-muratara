@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
             element: <DetailPeraturanPage />,
           },
           {
-            path: "profile",
+            path: "profile/:id",
             element: <Profile />,
           },
           {

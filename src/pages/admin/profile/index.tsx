@@ -8,9 +8,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const { toast } = useToast();
+  const { id } = useParams();
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const form = useForm<UserSchema>({
@@ -30,7 +32,7 @@ const Profile = () => {
       return;
     }
     try {
-      const result = await updateProfile(body);
+      const result = await updateProfile(id as string, body);
       toast({
         description: result.message,
       });

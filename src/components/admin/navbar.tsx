@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { changeToken } = useToken();
+  const { changeToken, id } = useToken();
   const handleLogout = () => {
     changeToken();
     toast({
@@ -35,7 +35,7 @@ const Navbar = () => {
         <DropdownMenuContent className="mr-2">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/admin/profile")}>
+          <DropdownMenuItem onClick={() => navigate(`/admin/profile/${id}`)}>
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleLogout()}>

@@ -10,8 +10,9 @@ import {
 import axiosWithConfig, { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
 
 interface Context {
+  id: string;
   token: string;
-  changeToken: (token?: string) => void;
+  changeToken: (id?: string, token?: string) => void;
 }
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const contextValue = {
+  id: "",
   token: "",
   changeToken: () => {},
 };
@@ -27,6 +29,7 @@ const TokenContext = createContext<Context>(contextValue);
 
 export function TokenProvider({ children }: Readonly<Props>) {
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
+  const [id, setId] = useState(localStorage.getItem("id") ?? "");
 
   useEffect(() => {
     setAxiosConfig(token);
@@ -44,24 +47,29 @@ export function TokenProvider({ children }: Readonly<Props>) {
   );
 
   const changeToken = useCallback(
-    (token?: string) => {
-      const newToken = token ?? ""; // const newToken = token ? token : "";
+    (id?: string, token?: string) => {
+      const newToken = token ?? "";
+      const newId = id ?? "";
       setToken(newToken);
+      setId(newId);
       if (token) {
         localStorage.setItem("token", newToken);
+        localStorage.setItem("id", newId);
       } else {
         localStorage.removeItem("token");
+        localStorage.removeItem("id");
       }
     },
-    [token]
+    [id, token]
   );
 
   const tokenContextValue = useMemo(
     () => ({
       token,
       changeToken,
+      id,
     }),
-    [token, changeToken]
+    [id, token, changeToken]
   );
 
   return (
