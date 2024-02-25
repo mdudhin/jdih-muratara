@@ -4,16 +4,16 @@ const ACCEPTED_PDF_TYPES = ["application/pdf"];
 
 export const peraturanSchema = z.object({
   jenis_peraturan: z.string().min(1, "Jenis peraturan is required"),
-  bentuk_peraturan: z.string(),
+  bentuk_peraturan: z.string().min(1, "Bentuk Peraturan is required"),
   judul: z.string().min(1, "Judul is required"),
   no_peraturan: z.string().min(1, "Nomor peraturan is required"),
   tahun: z.string().min(1, "Tahun is required"),
-  tmpt_penetapan: z.string(),
-  tgl_penetapan: z.string().min(1, "Tanggal penetapan is required"),
-  penandatanganan: z.string(),
-  tgl_penandatanganan: z.string(),
-  pemrakarsa: z.string(),
-  sumber: z.string(),
+  tmpt_penetapan: z.string().min(1, "Tempat Penetapan is required"),
+  tgl_penetapan: z.string().min(1, "Tanggal Penandatangan is required"),
+  penandatanganan: z.string().min(1, "Tempat Penetapan is required"),
+  tgl_penandatanganan: z.string().min(1, "Tanggal Penandatangan is required"),
+  pemrakarsa: z.string().min(1, "Pemrakarsa is required"),
+  sumber: z.string().min(1, "Sumber is required"),
   status: z.string().min(1, "Status is required"),
   /* note: z.string().optional(), */
   file: z
