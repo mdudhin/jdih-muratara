@@ -1,4 +1,3 @@
-import React from "react";
 import StrukturOrganisasi from "./struktur_organisasi";
 import VisiMisi from "./visi_misi";
 

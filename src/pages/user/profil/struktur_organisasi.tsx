@@ -1,5 +1,4 @@
 // StrukturOrganisasi.js
-import React from "react";
 
 const StrukturOrganisasi = () => {
   return (

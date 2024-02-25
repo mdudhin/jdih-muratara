@@ -23,10 +23,11 @@ import image1 from "@/assets/image1.jpeg";
 import image2 from "@/assets/image2.jpg";
 import image3 from "@/assets/image3.jpg";
 import image4 from "@/assets/image4.jpg";
-import { useNavigate } from "react-router-dom";
+
+// import { useNavigate } from "react-router-dom";
 
 const PeraturanPage = () => {
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const [data, setData] = useState<Peraturan[]>([]);
 
   const columns: ColumnDef<Peraturan>[] = [
