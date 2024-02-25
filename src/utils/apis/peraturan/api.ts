@@ -30,7 +30,7 @@ export const createPeraturan = async (body: PeraturanSchema) => {
   formData.append("pemrakarsa", body.pemrakarsa);
   formData.append("sumber", body.sumber);
   formData.append("status", body.status);
-  /* formData.append("note", body.note); */
+  formData.append("note", body.note);
   formData.append("file", body.file[0]);
   try {
     const response = await axiosWithConfig.post("api/data-hukum", formData);

@@ -17,6 +17,14 @@ const Sidebar = () => {
           label="Dokumen Hukum"
           items={[{ path: "/admin/peraturan", label: "Peraturan" }]}
         />
+        <li>
+          <Link
+            to={"/admin/registeruser"}
+            className="flex items-center p-2 rounded-lg text-white hover:bg-gray-100 hover:text-gray-900 group"
+          >
+            <span className="ms-3">Register User</span>
+          </Link>
+        </li>
       </ul>
     </div>
   );

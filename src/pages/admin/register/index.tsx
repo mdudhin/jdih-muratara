@@ -3,13 +3,13 @@ import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { UserSchema, userSchema, updateProfile } from "@/utils/apis/user";
+import { UserSchema, userSchema, registerUser } from "@/utils/apis/user";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
-const Profile = () => {
+const Register = () => {
   const { toast } = useToast();
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
@@ -21,7 +21,7 @@ const Profile = () => {
     },
   });
 
-  const handleUpdateProfile = async (body: UserSchema) => {
+  const handleRegisterUser = async (body: UserSchema) => {
     if (body.password !== passwordConfirmation) {
       toast({
         description: "Password and confirmation do not match.",
@@ -30,9 +30,9 @@ const Profile = () => {
       return;
     }
     try {
-      const result = await updateProfile(body);
+      await registerUser(body);
       toast({
-        description: result.message,
+        description: "Insert data successfully",
       });
     } catch (error) {
       toast({
@@ -46,7 +46,7 @@ const Profile = () => {
     <div className="m-10 flex flex-col xl:px-48">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleUpdateProfile)}
+          onSubmit={form.handleSubmit(handleRegisterUser)}
           className="m-10 flex flex-col gap-6"
         >
           <CustomFormField
@@ -99,7 +99,7 @@ const Profile = () => {
             {form.formState.isSubmitting ? (
               <Loader2 className="animate-spin" />
             ) : (
-              "Save"
+              "Submit"
             )}
           </Button>
         </form>
@@ -108,4 +108,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Register;
