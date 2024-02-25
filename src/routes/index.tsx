@@ -6,6 +6,7 @@ import LayoutUser from "../layout/user";
 import LoginPage from "../pages/auth/login";
 import PeraturanPage from "../pages/admin/peraturan";
 import Profile from "../pages/admin/profile";
+import Register from "../pages/admin/register";
 import PeraturanUserPage from "../pages/user/peraturan";
 import ProfilPage from "../pages/user/profil";
 import ProtectedRoutes from "./protectedRoutes";
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+          },
+          {
+            path: "registeruser",
+            element: <Register />,
           },
         ],
       },

@@ -15,7 +15,7 @@ export const peraturanSchema = z.object({
   pemrakarsa: z.string().min(1, "Pemrakarsa is required"),
   sumber: z.string().min(1, "Sumber is required"),
   status: z.string().min(1, "Status is required"),
-  /* note: z.string().optional(), */
+  note: z.string().optional().or(z.literal("")),
   file: z
     .any()
     .refine((file) => file?.length == 1, "PDF is required.")

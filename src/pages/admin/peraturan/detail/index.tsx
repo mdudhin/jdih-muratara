@@ -41,7 +41,7 @@ const DetailPeraturan = () => {
       pemrakarsa: "",
       sumber: "",
       status: "",
-      /* note: "", */
+      note: "",
       file: "",
     },
   });
@@ -50,8 +50,10 @@ const DetailPeraturan = () => {
 
   const handleCreatePeraturan = async (body: PeraturanSchema) => {
     try {
-      const response = await createPeraturan(body);
-      console.log(response);
+      await createPeraturan(body);
+      toast({
+        description: "Insert data successfully",
+      });
       navigate("/admin/peraturan");
     } catch (error) {
       toast({
@@ -285,7 +287,7 @@ const DetailPeraturan = () => {
             )}
           </CustomFormField>
 
-          {/* {form.getValues("status") === "Diubah" && (
+          {form.getValues("status") === "Diubah" && (
             <CustomFormField control={form.control} name="note" label="Note">
               {(field) => (
                 <Input
@@ -298,7 +300,7 @@ const DetailPeraturan = () => {
                 />
               )}
             </CustomFormField>
-          )} */}
+          )}
 
           <CustomFormField
             control={form.control}
