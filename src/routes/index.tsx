@@ -5,6 +5,8 @@ import LayoutAdmin from "../layout/admin";
 import LayoutUser from "../layout/user";
 import LoginPage from "../pages/auth/login";
 import PeraturanPage from "../pages/admin/peraturan";
+import PeraturanUserPage from "../pages/user/peraturan";
+import ProfilPage from "../pages/user/profil";
 import ProtectedRoutes from "./protectedRoutes";
 import RegisterPage from "../pages/auth/register";
 import { createBrowserRouter } from "react-router-dom";
@@ -17,6 +19,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "profil",
+        element: <ProfilPage />,
+      },
+      {
+        path: "peraturan",
+        element: <PeraturanUserPage />,
       },
     ],
   },
