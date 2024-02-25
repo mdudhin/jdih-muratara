@@ -5,6 +5,7 @@ import LayoutAdmin from "../layout/admin";
 import LayoutUser from "../layout/user";
 import LoginPage from "../pages/auth/login";
 import PeraturanPage from "../pages/admin/peraturan";
+import Profile from "../pages/admin/profile";
 import PeraturanUserPage from "../pages/user/peraturan";
 import ProfilPage from "../pages/user/profil";
 import ProtectedRoutes from "./protectedRoutes";
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
           {
             path: "peraturan/detail/:action",
             element: <DetailPeraturanPage />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
           },
         ],
       },

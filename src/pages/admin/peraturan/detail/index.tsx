@@ -51,9 +51,7 @@ const DetailPeraturan = () => {
   const handleCreatePeraturan = async (body: PeraturanSchema) => {
     try {
       const response = await createPeraturan(body);
-      toast({
-        description: response.message,
-      });
+      console.log(response);
       navigate("/admin/peraturan");
     } catch (error) {
       toast({

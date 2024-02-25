@@ -35,7 +35,9 @@ const Navbar = () => {
         <DropdownMenuContent className="mr-2">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/admin/profile")}>
+            Profile
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleLogout()}>
             Logout
           </DropdownMenuItem>

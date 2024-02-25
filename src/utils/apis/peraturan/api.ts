@@ -17,7 +17,7 @@ export const getPeraturan = async (searchBy?: string, search?: number) => {
 
 export const createPeraturan = async (body: PeraturanSchema) => {
   const formData: any = new FormData();
-
+  console.log(body.file[0]);
   formData.append("jenis_peraturan", body.jenis_peraturan);
   formData.append("bentuk_peraturan", body.bentuk_peraturan);
   formData.append("judul", body.judul);
