@@ -71,8 +71,8 @@ const NestedSidebar = (props: Props) => {
         </svg>
       </button>
       <ul className={`${isNestedListVisible ? "py-2" : "hidden"} space-y-2`}>
-        {items.map((item) => (
-          <li>
+        {items.map((item, i) => (
+          <li key={i}>
             <Link
               to={item.path}
               className="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 text-white hover:text-gray-900"
