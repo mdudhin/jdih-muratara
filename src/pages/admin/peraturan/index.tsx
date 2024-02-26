@@ -64,36 +64,52 @@ const PeraturanPage = () => {
     {
       id: "actions",
       enableHiding: false,
-      cell: () =>
-        // { row }
-        {
-          // const payment = row.original;
+      cell: ({ row }) => {
+        const data = row.original;
 
-          return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <DotsHorizontalIcon className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>View</DropdownMenuItem>
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Delete</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          );
-        },
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => window.open(data.file, "_blank")}
+              >
+                View
+              </DropdownMenuItem>
+              {data.isNewRecord && (
+                <DropdownMenuItem
+                  onClick={() => window.open(data.file, "_blank")}
+                >
+                  Previous Peraturan
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem>Delete</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
     },
   ];
 
   const getData = async () => {
     try {
       const response = await getPeraturan();
-      setData(response);
+      const newArr = response.map((item: Peraturan) => ({
+        previousDataValues: item._previousDataValues,
+        uniqno: item.uniqno,
+        isNewRecord: item.isNewRecord,
+        ...item.dataValues,
+        file: item.file,
+      }));
+      setData(newArr);
     } catch (error) {
       console.log(error);
     }

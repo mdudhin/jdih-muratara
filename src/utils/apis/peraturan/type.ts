@@ -31,6 +31,16 @@ export const peraturanSchema = z.object({
 export type PeraturanSchema = z.infer<typeof peraturanSchema>;
 
 export interface Peraturan {
+  dataValues: DataValues;
+  _previousDataValues: PreviousDataValues;
+  uniqno: number;
+  _changed: Changed;
+  _options: Options;
+  isNewRecord: boolean;
+  file: any;
+}
+
+export interface DataValues {
   id: string;
   jenis_peraturan: string;
   bentuk_peraturan: string;
@@ -44,7 +54,38 @@ export interface Peraturan {
   pemrakarsa: string;
   sumber: string;
   status: string;
-  file: string;
+  file: any;
+  note: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface PreviousDataValues {
+  id: string;
+  jenis_peraturan: string;
+  bentuk_peraturan: string;
+  judul: string;
+  no_peraturan: string;
+  tahun: string;
+  tmpt_penetapan: string;
+  tgl_penetapan: string;
+  penandatanganan: string;
+  tgl_penandatanganan: string;
+  pemrakarsa: string;
+  sumber: string;
+  status: string;
+  file: any;
+  note: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Changed {}
+
+export interface Options {
+  isNewRecord: boolean;
+  _schema: any;
+  _schemaDelimiter: string;
+  raw: boolean;
+  attributes: string[];
 }
