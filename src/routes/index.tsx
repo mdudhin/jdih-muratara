@@ -7,6 +7,7 @@ import LoginPage from "../pages/auth/login";
 import PeraturanPage from "../pages/admin/peraturan";
 import Profile from "../pages/admin/profile";
 import Register from "../pages/admin/register";
+import DetailRegister from "@/pages/admin/register/detail";
 import PeraturanUserPage from "../pages/user/peraturan";
 import ProfilPage from "../pages/user/profil";
 import ProtectedRoutes from "./protectedRoutes";
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
             element: <PeraturanPage />,
           },
           {
-            path: "peraturan/detail/:action",
+            path: "peraturan/detail/:action/:id?",
             element: <DetailPeraturanPage />,
           },
           {
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
           {
             path: "registeruser",
             element: <Register />,
+          },
+          {
+            path: "registeruser/detail/:action",
+            element: <DetailRegister />,
           },
         ],
       },

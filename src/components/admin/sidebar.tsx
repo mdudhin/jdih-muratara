@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 const Sidebar = () => {
+  const location = useLocation();
   return (
     <div className="bg-slate-800 flex flex-col gap-2 p-5 w-1/5">
       <ul className="space-y-2 font-medium">
         <li>
           <Link
             to={"/admin/"}
-            className="flex items-center p-2 rounded-lg text-white hover:bg-gray-100 hover:text-gray-900 group"
+            className={
+              location.pathname === "/admin/"
+                ? "flex items-center p-2 rounded-lg bg-gray-100 text-gray-900 group"
+                : "flex items-center p-2 rounded-lg text-white hover:bg-gray-100 hover:text-gray-900 group"
+            }
           >
             <span className="ms-3">Dashboard</span>
           </Link>
@@ -20,7 +25,11 @@ const Sidebar = () => {
         <li>
           <Link
             to={"/admin/registeruser"}
-            className="flex items-center p-2 rounded-lg text-white hover:bg-gray-100 hover:text-gray-900 group"
+            className={
+              location.pathname === "/admin/registeruser"
+                ? "flex items-center p-2 rounded-lg bg-gray-100 text-gray-900 group"
+                : "flex items-center p-2 rounded-lg text-white hover:bg-gray-100 hover:text-gray-900 group"
+            }
           >
             <span className="ms-3">Register User</span>
           </Link>
@@ -75,7 +84,11 @@ const NestedSidebar = (props: Props) => {
           <li key={i}>
             <Link
               to={item.path}
-              className="flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 text-white hover:text-gray-900"
+              className={
+                location.pathname === item.path
+                  ? "flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group bg-gray-100 text-gray-900"
+                  : "flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 text-white hover:text-gray-900"
+              }
             >
               {item.label}
             </Link>

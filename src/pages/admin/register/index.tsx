@@ -1,109 +1,50 @@
-import CustomFormField from "@/components/shared/custom-formfield";
-import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { UserSchema, userSchema, registerUser } from "@/utils/apis/user";
-import { useToast } from "@/components/ui/use-toast";
+import { MyTable } from "@/components/admin/table";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { getAllUser } from "@/utils/apis/peraturan/api";
+import { CREATE } from "@/utils/constants";
+import { ColumnDef } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const { toast } = useToast();
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const navigate = useNavigate();
+  const [data, setData] = useState<[{ username: string }]>([{ username: "" }]);
 
-  const form = useForm<UserSchema>({
-    resolver: zodResolver(userSchema),
-    defaultValues: {
-      username: "",
-      password: "",
+  const columns: ColumnDef<string>[] = [
+    {
+      accessorKey: "no",
+      header: "No",
+      cell: ({ row }) => <div className="capitalize">{row.index + 1} </div>,
     },
-  });
+    {
+      accessorKey: "username",
+      header: "Username",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("username")} </div>
+      ),
+    },
+  ];
 
-  const handleRegisterUser = async (body: UserSchema) => {
-    if (body.password !== passwordConfirmation) {
-      toast({
-        description: "Password and confirmation do not match.",
-        variant: "destructive",
-      });
-      return;
-    }
+  const getData = async () => {
     try {
-      await registerUser(body);
-      toast({
-        description: "Insert data successfully",
-      });
+      const response = await getAllUser();
+      setData(response);
+      console.log(response);
     } catch (error) {
-      toast({
-        description: (error as Error).message,
-        variant: "destructive",
-      });
+      console.log(error);
     }
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <div className="m-10 flex flex-col xl:px-48">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleRegisterUser)}
-          className="m-10 flex flex-col gap-6"
-        >
-          <CustomFormField
-            control={form.control}
-            name="username"
-            label="Username"
-          >
-            {(field) => (
-              <Input
-                {...field}
-                placeholder="Username"
-                type="text"
-                disabled={form.formState.isSubmitting}
-                aria-disabled={form.formState.isSubmitting}
-                className="border-tyellow focus-visible:ring-tyellow"
-              />
-            )}
-          </CustomFormField>
-          <CustomFormField
-            control={form.control}
-            name="password"
-            label="Password"
-          >
-            {(field) => (
-              <Input
-                {...field}
-                placeholder="Password"
-                type="password"
-                disabled={form.formState.isSubmitting}
-                aria-disabled={form.formState.isSubmitting}
-                className="border-tyellow focus-visible:ring-tyellow"
-              />
-            )}
-          </CustomFormField>
-          <Input
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-            placeholder="Confirm Password"
-            type="password"
-            disabled={form.formState.isSubmitting}
-            aria-disabled={form.formState.isSubmitting}
-            className="border-tyellow focus-visible:ring-tyellow"
-          />
-          <Button
-            type="submit"
-            className=" bg-green-500 hover:bg-green-400"
-            disabled={form.formState.isSubmitting}
-            aria-disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              "Submit"
-            )}
-          </Button>
-        </form>
-      </Form>
+    <div className="m-10 flex flex-col space-y-3">
+      <Button className="self-end" onClick={() => navigate(`detail/${CREATE}`)}>
+        Add
+      </Button>
+      <MyTable columns={columns} data={data} />
     </div>
   );
 };
