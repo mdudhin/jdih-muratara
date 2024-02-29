@@ -7,7 +7,7 @@ export const updateProfile = async (id: string, body: UserSchema) => {
     const response = await axiosWithConfig.put(`api/user/update/${id}`, body);
     return response.data as { message: string };
   } catch (error: any) {
-    throw new Error(error.response.data.message);
+    throw new Error(error.response.data.error);
   }
 };
 

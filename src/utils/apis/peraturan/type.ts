@@ -40,6 +40,31 @@ export interface Peraturan {
   file: any;
 }
 
+export interface NewPeraturan {
+  _previousDataValues: PreviousDataValues;
+  uniqno: number;
+  _changed: Changed;
+  _options: Options;
+  isNewRecord: boolean;
+  file: any;
+  id: string;
+  jenis_peraturan: string;
+  bentuk_peraturan: string;
+  judul: string;
+  no_peraturan: string;
+  tahun: string;
+  tmpt_penetapan: string;
+  tgl_penetapan: string;
+  penandatanganan: string;
+  tgl_penandatanganan: string;
+  pemrakarsa: string;
+  sumber: string;
+  status: string;
+  note: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface DataValues {
   id: string;
   jenis_peraturan: string;

@@ -6,21 +6,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Peraturan, getPeraturan } from "@/utils/apis/peraturan";
+import { NewPeraturan, getPeraturan } from "@/utils/apis/peraturan";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { CREATE } from "@/utils/constants";
+import { CREATE, EDIT } from "@/utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { MyTable } from "@/components/admin/table";
+import AlertDelete from "@/components/shared/AlertDialog";
 import { useNavigate } from "react-router-dom";
+import { deletePeraturan } from "@/utils/apis/peraturan/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const PeraturanPage = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState<Peraturan[]>([]);
+  const [data, setData] = useState<NewPeraturan[]>([]);
+  const { toast } = useToast();
+  const [isAlertOpen, setAlertOpen] = useState(false);
 
-  const columns: ColumnDef<Peraturan>[] = [
+  const showAlertDelete = () => {
+    setAlertOpen(true);
+  };
+
+  const closeAlertDelete = () => {
+    setAlertOpen(false);
+  };
+
+  const columns: ColumnDef<NewPeraturan>[] = [
     {
       accessorKey: "no",
       header: "No",
@@ -35,7 +48,7 @@ const PeraturanPage = () => {
     },
     {
       accessorKey: "no_peraturan",
-      header: "Nomor",
+      header: "Nomor Peraturan",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("no_peraturan")} </div>
       ),
@@ -68,32 +81,54 @@ const PeraturanPage = () => {
         const data = row.original;
 
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => window.open(data.file, "_blank")}
-              >
-                View
-              </DropdownMenuItem>
-              {data.isNewRecord && (
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <DotsHorizontalIcon className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => window.open(data.file, "_blank")}
                 >
-                  Previous Peraturan
+                  View
                 </DropdownMenuItem>
-              )}
-              <DropdownMenuItem>Edit</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                {data.isNewRecord && (
+                  <DropdownMenuItem
+                    onClick={() => window.open(data.file, "_blank")}
+                  >
+                    Previous Peraturan
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem
+                  onClick={() => navigate(`detail/${EDIT}/${data.id}`)}
+                >
+                  Edit
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation;
+                    showAlertDelete();
+                  }}
+                >
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {isAlertOpen && (
+              <AlertDelete
+                title="Are you absolutely sure?"
+                description="This action cannot be undone. This will permanently delete your
+                data and remove your data from our servers."
+                onCancel={closeAlertDelete}
+                onAction={() => handleDeletePeraturan(data.id)}
+              />
+            )}
+          </div>
         );
       },
     },
@@ -102,16 +137,25 @@ const PeraturanPage = () => {
   const getData = async () => {
     try {
       const response = await getPeraturan();
-      const newArr = response.map((item: Peraturan) => ({
-        previousDataValues: item._previousDataValues,
-        uniqno: item.uniqno,
-        isNewRecord: item.isNewRecord,
-        ...item.dataValues,
-        file: item.file,
-      }));
-      setData(newArr);
+      setData(response);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleDeletePeraturan = async (id: string) => {
+    closeAlertDelete();
+    try {
+      await deletePeraturan(id);
+      getData();
+      toast({
+        description: "Delete successfully",
+      });
+    } catch (error) {
+      toast({
+        description: (error as Error).message,
+        variant: "destructive",
+      });
     }
   };
 

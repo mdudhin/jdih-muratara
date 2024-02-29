@@ -1,6 +1,22 @@
-import { Peraturan, PeraturanSchema, peraturanSchema } from "./type";
+import {
+  Peraturan,
+  PeraturanSchema,
+  peraturanSchema,
+  NewPeraturan,
+} from "./type";
 
-import { getPeraturan } from "./api";
+import {
+  getPeraturan,
+  createPeraturan,
+  editPeraturan,
+  getPeraturanId,
+} from "./api";
 
-export type { PeraturanSchema, Peraturan };
-export { peraturanSchema, getPeraturan };
+export type { PeraturanSchema, Peraturan, NewPeraturan };
+export {
+  peraturanSchema,
+  getPeraturan,
+  createPeraturan,
+  editPeraturan,
+  getPeraturanId,
+};

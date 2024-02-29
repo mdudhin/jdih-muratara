@@ -1,5 +1,11 @@
 import { Form, FormControl } from "@/components/ui/form";
-import { PeraturanSchema, peraturanSchema } from "@/utils/apis/peraturan";
+import {
+  PeraturanSchema,
+  createPeraturan,
+  editPeraturan,
+  getPeraturanId,
+  peraturanSchema,
+} from "@/utils/apis/peraturan";
 import {
   Select,
   SelectContent,
@@ -15,9 +21,8 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createPeraturan } from "@/utils/apis/peraturan/api";
 import { useToast } from "@/components/ui/use-toast";
 
 const DetailPeraturan = () => {
@@ -25,6 +30,9 @@ const DetailPeraturan = () => {
   // const { action } = useParams();
   const [pdfUrl, setPdfUrl] = useState<string>("");
   const { toast } = useToast();
+  const { id } = useParams();
+  const [pdf, setPdf] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<PeraturanSchema>({
     resolver: zodResolver(peraturanSchema),
@@ -63,17 +71,76 @@ const DetailPeraturan = () => {
     }
   };
 
+  const handleEditPeraturan = async (body: PeraturanSchema) => {
+    try {
+      await editPeraturan(id as string, body);
+      toast({
+        description: "Edit data successfully",
+      });
+      navigate("/admin/peraturan");
+    } catch (error) {
+      toast({
+        description: (error as Error).message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const fetchPengaturanId = async () => {
+    setLoading(true);
+    try {
+      const result = await getPeraturanId(id as string);
+      console.log(result);
+      form.setValue("jenis_peraturan", result?.jenis_peraturan as string);
+      form.setValue("bentuk_peraturan", result?.bentuk_peraturan as string);
+      form.setValue("judul", result?.judul as string);
+      form.setValue("no_peraturan", result?.no_peraturan as string);
+      form.setValue("tahun", result?.tahun as string);
+      form.setValue("tmpt_penetapan", result?.tmpt_penetapan as string);
+      form.setValue("tgl_penetapan", result?.tgl_penetapan as string);
+      form.setValue("penandatanganan", result?.penandatanganan as string);
+      form.setValue(
+        "tgl_penandatanganan",
+        result?.tgl_penandatanganan as string
+      );
+      form.setValue("pemrakarsa", result?.pemrakarsa as string);
+      form.setValue("sumber", result?.sumber as string);
+      form.setValue("status", result?.status as string);
+      form.setValue("note", result?.note as string);
+      setPdf(result?.file);
+      setLoading(false);
+    } catch (error) {
+      toast({
+        description: (error as Error).message,
+        variant: "destructive",
+      });
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (fileWatcher?.length > 0) {
       setPdfUrl(URL.createObjectURL(fileWatcher?.[0]));
     }
   }, [fileWatcher]);
 
-  return (
+  useEffect(() => {
+    if (id) {
+      fetchPengaturanId();
+    }
+  }, [id]);
+
+  return loading ? (
+    <div className="flex justify-center items-center h-screen">
+      <Loader2 />
+    </div>
+  ) : (
     <ScrollArea>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleCreatePeraturan)}
+          onSubmit={form.handleSubmit(
+            id ? handleEditPeraturan : handleCreatePeraturan
+          )}
           className="m-10 flex flex-col gap-5"
         >
           <CustomFormField
@@ -311,14 +378,14 @@ const DetailPeraturan = () => {
             {() => (
               <>
                 <div className="flex w-full justify-center">
-                  {pdfUrl && (
+                  {pdfUrl || pdf ? (
                     <embed
-                      src={pdfUrl}
+                      src={pdfUrl || pdf}
                       type="application/pdf"
                       width="100%"
                       height="500px"
                     />
-                  )}
+                  ) : null}
                 </div>
                 <Input
                   {...form.register("file")}
