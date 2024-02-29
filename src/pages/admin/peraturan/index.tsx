@@ -15,7 +15,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { MyTable } from "@/components/admin/table";
 import AlertDelete from "@/components/shared/AlertDialog";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { deletePeraturan } from "@/utils/apis/peraturan/api";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -24,6 +24,7 @@ const PeraturanPage = () => {
   const [data, setData] = useState<NewPeraturan[]>([]);
   const { toast } = useToast();
   const [isAlertOpen, setAlertOpen] = useState(false);
+  const { searchBy, search } = useParams();
 
   const showAlertDelete = () => {
     setAlertOpen(true);
@@ -105,7 +106,9 @@ const PeraturanPage = () => {
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuItem
-                  onClick={() => navigate(`detail/${EDIT}/${data.id}`)}
+                  onClick={() =>
+                    navigate(`/admin/peraturan/detail/${EDIT}/${data.id}`)
+                  }
                 >
                   Edit
                 </DropdownMenuItem>
@@ -136,7 +139,7 @@ const PeraturanPage = () => {
 
   const getData = async () => {
     try {
-      const response = await getPeraturan();
+      const response = await getPeraturan(searchBy as string, search as string);
       setData(response);
     } catch (error) {
       console.log(error);
@@ -161,7 +164,7 @@ const PeraturanPage = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchBy, search]);
 
   return (
     <div className="m-10 flex flex-col">
@@ -177,6 +180,8 @@ const PeraturanPage = () => {
           { label: "Tahun", value: "tahun" },
           { label: "Status Peraturan", value: "status" },
         ]}
+        searchBy={searchBy}
+        search={search}
       />
     </div>
   );

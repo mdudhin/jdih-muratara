@@ -45,11 +45,13 @@ const Profile = () => {
   };
 
   return (
-    <div className="m-10 flex flex-col xl:px-48">
+    <div className="m-10 flex flex-col">
+      <p className="text-3xl font-semibold">Profile</p>
+      <p></p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleUpdateProfile)}
-          className="m-10 flex flex-col gap-6"
+          className="m-10 flex flex-col gap-6 xl:px-48"
         >
           <CustomFormField
             control={form.control}

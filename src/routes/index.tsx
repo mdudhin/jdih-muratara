@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
             element: <DashboardPage />,
           },
           {
-            path: "peraturan",
+            path: "peraturan/:searchBy?/:search?",
             element: <PeraturanPage />,
           },
           {

@@ -44,6 +44,7 @@ const DetailRegister = () => {
 
   return (
     <div className="m-10 flex flex-col">
+      <p className="text-3xl font-semibold">Add User</p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleRegisterUser)}

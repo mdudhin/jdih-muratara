@@ -2,7 +2,7 @@ import { PeraturanSchema } from ".";
 import axiosWithConfig from "../axiosWithConfig";
 import { DataValues } from "./type";
 
-export const getPeraturan = async (searchBy?: string, search?: number) => {
+export const getPeraturan = async (searchBy?: string, search?: string) => {
   try {
     const response = await axiosWithConfig.get(
       `api/data-hukum/all-data?searchBy=${searchBy || ""}&search=${
