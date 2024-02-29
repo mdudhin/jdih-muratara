@@ -373,7 +373,7 @@ const DetailPeraturan = () => {
             control={form.control}
             name="file"
             label="Upload Peraturan"
-            required
+            required={!id}
           >
             {() => (
               <>
@@ -392,7 +392,7 @@ const DetailPeraturan = () => {
                   id="image"
                   type="file"
                   accept="application/pdf"
-                  required
+                  required={!id}
                 />
               </>
             )}

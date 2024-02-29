@@ -29,7 +29,6 @@ const Register = () => {
     try {
       const response = await getAllUser();
       setData(response);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

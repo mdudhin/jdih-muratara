@@ -33,6 +33,8 @@ import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { Combobox } from "../shared/ComboBox";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface Filter {
   value: string;
@@ -43,21 +45,41 @@ interface Props {
   columns: any[];
   data: any[];
   filter?: Filter[];
+  searchBy?: string;
+  search?: string;
 }
 
 export function MyTable(props: Props) {
-  const { columns, data, filter } = props;
-
+  const { columns, data, filter, searchBy, search } = props;
+  const navigate = useNavigate();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [placeholder, setPlaceholder] = React.useState<string>(
+    searchBy
+      ? filter?.find((f) => f.value === searchBy)?.label || "Select Filter"
+      : "Select Filter"
+  );
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [selectedFilter, setSelectedFilter] = React.useState<string>(
-    filter ? filter[0].value : ""
+    searchBy || (filter ? filter[0].value : "")
   );
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    const sanitizedValue = newValue.replace(/ /g, "%20");
+    table.getColumn(selectedFilter)?.setFilterValue(newValue);
+    navigate(`/admin/peraturan/${selectedFilter}/${sanitizedValue}`);
+  };
+  useEffect(() => {
+    if (searchBy) {
+      const selectedFilterLabel =
+        filter?.find((f) => f.value === searchBy)?.label || "Select Filter";
+      setPlaceholder(selectedFilterLabel);
+    }
+  }, [searchBy, filter]);
 
   const table = useReactTable({
     data,
@@ -85,24 +107,28 @@ export function MyTable(props: Props) {
           <Input
             placeholder="Search..."
             value={
-              (table.getColumn(selectedFilter)?.getFilterValue() as string) ??
-              ""
+              search
+                ? search
+                : (table
+                    .getColumn(selectedFilter)
+                    ?.getFilterValue() as string) ?? ""
             }
-            onChange={(event) => {
-              table
-                .getColumn(selectedFilter)
-                ?.setFilterValue(event.target.value);
-            }}
+            onChange={handleInputChange}
             className="max-w-sm"
           />
           <div className="w-2" />
           <Combobox
             items={filter}
             onChange={(item) => {
+              const newSelectedFilter = item ? item.value : "";
               table.getColumn(selectedFilter)?.setFilterValue("");
-              setSelectedFilter(item ? item?.value : "");
+              setSelectedFilter(newSelectedFilter);
+              const selectedFilterLabel =
+                filter?.find((f) => f.value === newSelectedFilter)?.label ||
+                "Select Filter";
+              setPlaceholder(selectedFilterLabel);
             }}
-            placeHolder="Select Filter"
+            placeHolder={searchBy ? placeholder : "Select Filter"}
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
