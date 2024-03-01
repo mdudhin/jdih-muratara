@@ -69,7 +69,7 @@ const Dashboard = () => {
   const data = [
     {
       title: "Total Akses Peraturan",
-      value: `${count}`,
+      value: `${count.toLocaleString()}`,
       unit: "Akses",
       color: "bg-gray-500",
       icon: UserSearch,
@@ -77,7 +77,7 @@ const Dashboard = () => {
     },
     {
       title: "Total User",
-      value: `${user}`,
+      value: `${user.toLocaleString()}`,
       unit: "User",
       color: "bg-green-500",
       icon: Users,
@@ -85,7 +85,7 @@ const Dashboard = () => {
     },
     {
       title: "Total Surat Edaran",
-      value: `${suratEdaranCount}`,
+      value: `${suratEdaranCount.toLocaleString()}`,
       unit: "Surat",
       color: "bg-yellow-500",
       icon: FileText,
@@ -93,7 +93,7 @@ const Dashboard = () => {
     },
     {
       title: "Total Peraturan Daerah",
-      value: `${peraturanDaerahCount}`,
+      value: `${peraturanDaerahCount.toLocaleString()}`,
       unit: "Peraturan",
       color: "bg-red-500",
       icon: Scale,
@@ -101,7 +101,7 @@ const Dashboard = () => {
     },
     {
       title: "Total Peraturan Bupati",
-      value: `${peraturanBupatiCount}`,
+      value: `${peraturanBupatiCount.toLocaleString()}`,
       unit: "Peraturan",
       color: "bg-blue-500",
       icon: Scale,
@@ -109,7 +109,7 @@ const Dashboard = () => {
     },
     {
       title: "Total Keputusan Bupati",
-      value: `${keputsanBupatiCount}`,
+      value: `${keputsanBupatiCount.toLocaleString()}`,
       unit: "Keputusan",
       color: "bg-purple-500",
       icon: Gavel,
