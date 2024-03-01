@@ -6,8 +6,10 @@ import {
 } from "../ui/dropdown-menu";
 
 import { Link } from "react-router-dom";
+import { useToken } from "@/utils/context/token";
 
 const Navbar = () => {
+  const { token } = useToken();
   return (
     <div className="bg-red-500 flex flex-row justify-between items-center py-4 px-5 sticky top-0 z-50">
       <div className="text-white">JDIH Musi Rawas Utara</div>
@@ -31,18 +33,27 @@ const Navbar = () => {
           Peraturan
         </Link>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <div className="text-base text-white cursor-pointer hover:text-gray-300">
-            Admin
-          </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="mr-2">
-          <DropdownMenuItem>
-            <Link to={"/login"}>Masuk</Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {token ? (
+        <Link
+          to={"/admin"}
+          className="text-base text-white cursor-pointer hover:text-gray-300"
+        >
+          Admin
+        </Link>
+      ) : (
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className="text-base text-white cursor-pointer hover:text-gray-300">
+              Admin
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="mr-2">
+            <DropdownMenuItem>
+              <Link to={"/login"}>Masuk</Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </div>
   );
 };
