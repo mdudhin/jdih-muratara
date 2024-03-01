@@ -1,53 +1,117 @@
+import {
+  getAllUserCount,
+  getCountAccess,
+  getPeraturanLength,
+} from "@/utils/apis/peraturan/api";
 import { FileText, Gavel, Scale, UserSearch, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
+  const [user, setUser] = useState<Number>(0);
+  const [count, setCount] = useState<Number>(0);
+  const [peraturanBupatiCount, setPeraturanBupatiCount] = useState<number>(0);
+  const [peraturanDaerahCount, setPeraturanDaerahCount] = useState<number>(0);
+  const [keputsanBupatiCount, setKeputsanBupatiCount] = useState<number>(0);
+  const [suratEdaranCount, setSuratEdaranCount] = useState<number>(0);
+
+  const getData = async () => {
+    try {
+      const response = await getAllUserCount();
+      setUser(response.count);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCount = async () => {
+    try {
+      const response = await getCountAccess();
+      setCount(response.hitCount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getRegulationCount = async () => {
+    try {
+      const bupatiCount = await getPeraturanLength(
+        "jenis_peraturan",
+        "peraturan bupati"
+      );
+      const daerahCount = await getPeraturanLength(
+        "jenis_peraturan",
+        "peraturan daerah"
+      );
+      const keputusanCount = await getPeraturanLength(
+        "jenis_peraturan",
+        "keputusan bupati"
+      );
+      const suratCount = await getPeraturanLength(
+        "jenis_peraturan",
+        "surat edaran"
+      );
+      setKeputsanBupatiCount(keputusanCount);
+      setPeraturanDaerahCount(daerahCount);
+      setPeraturanBupatiCount(bupatiCount);
+      setSuratEdaranCount(suratCount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    getCount();
+    getRegulationCount();
+  }, []);
+
   const data = [
     {
       title: "Total Akses Peraturan",
-      value: "11,000",
+      value: `${count}`,
       unit: "Akses",
-      color: "gray",
+      color: "bg-gray-500",
       icon: UserSearch,
-      path: "",
+      path: "/",
     },
     {
       title: "Total User",
-      value: "11,000",
+      value: `${user}`,
       unit: "User",
-      color: "green",
+      color: "bg-green-500",
       icon: Users,
       path: "/admin/registeruser",
     },
     {
       title: "Total Surat Edaran",
-      value: "12,000",
+      value: `${suratEdaranCount}`,
       unit: "Surat",
-      color: "yellow",
+      color: "bg-yellow-500",
       icon: FileText,
       path: "/admin/peraturan/jenis_peraturan/surat%20edaran",
     },
     {
       title: "Total Peraturan Daerah",
-      value: "13,000",
+      value: `${peraturanDaerahCount}`,
       unit: "Peraturan",
-      color: "red",
+      color: "bg-red-500",
       icon: Scale,
       path: "/admin/peraturan/jenis_peraturan/peraturan%20daerah",
     },
     {
       title: "Total Peraturan Bupati",
-      value: "14,000",
+      value: `${peraturanBupatiCount}`,
       unit: "Peraturan",
-      color: "blue",
+      color: "bg-blue-500",
       icon: Scale,
       path: "/admin/peraturan/jenis_peraturan/peraturan%20bupati",
     },
     {
       title: "Total Keputusan Bupati",
-      value: "15,000",
+      value: `${keputsanBupatiCount}`,
       unit: "Keputusan",
-      color: "purple",
+      color: "bg-purple-500",
       icon: Gavel,
       path: "/admin/peraturan/jenis_peraturan/keputusan%20bupati",
     },
@@ -55,10 +119,9 @@ const Dashboard = () => {
   return (
     <div className="grid grid-cols-3 w-full gap-10 p-10">
       {data.map((item, index) => (
-        <Link to={item.path}>
+        <Link to={item.path} key={index}>
           <div
-            key={index}
-            className={`flex flex-col bg-${item.color}-500 rounded-xl p-10 space-y-5 transition-transform transform hover:rotate-[-5deg] hover:scale-105 cursor-pointer`}
+            className={`flex flex-col ${item.color} rounded-xl p-10 space-y-5 transition-transform transform hover:rotate-[-5deg] hover:scale-105 cursor-pointer`}
           >
             <p className="font-semibold text-xl text-white">{item.title}</p>
             <div className="flex justify-between items-center w-full">

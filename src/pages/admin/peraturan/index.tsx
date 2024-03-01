@@ -168,7 +168,10 @@ const PeraturanPage = () => {
 
   return (
     <div className="m-10 flex flex-col">
-      <Button className="self-end" onClick={() => navigate(`detail/${CREATE}`)}>
+      <Button
+        className="self-end"
+        onClick={() => navigate(`/admin/peraturan/detail/${CREATE}`)}
+      >
         Add
       </Button>
       <MyTable
