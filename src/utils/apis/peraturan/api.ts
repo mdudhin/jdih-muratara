@@ -93,3 +93,36 @@ export const getAllUser = async () => {
     throw new Error(error.message);
   }
 };
+
+export const getAllUserCount = async () => {
+  try {
+    const response = await axiosWithConfig.get(`/api/user/all-user`);
+    return response.data as { count: number };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const getCountAccess = async () => {
+  try {
+    const response = await axiosWithConfig.get(`api/data-hukum/hit-amount`);
+    return response.data as { hitCount: number };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const getPeraturanLength = async (
+  searchBy?: string,
+  search?: string
+) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `api/data-hukum/all-data?searchBy=${searchBy}&search=${search}`
+    );
+
+    return response.data.length;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
