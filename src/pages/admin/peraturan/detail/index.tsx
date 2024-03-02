@@ -24,6 +24,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast";
+import { Worker } from "@react-pdf-viewer/core";
+import { Viewer } from "@react-pdf-viewer/core";
+// Import the Viewer styles
+import "@react-pdf-viewer/core/lib/styles/index.css";
 
 const DetailPeraturan = () => {
   const navigate = useNavigate();
@@ -107,7 +111,12 @@ const DetailPeraturan = () => {
       form.setValue("sumber", result?.sumber as string);
       form.setValue("status", result?.status as string);
       form.setValue("note", result?.note as string);
-      setPdf(result?.file);
+      const blob = new Blob([result.file], {
+        type: "application/pdf",
+      });
+      const url = URL.createObjectURL(blob);
+      setPdf(url);
+      console.log(url);
       setLoading(false);
     } catch (error) {
       toast({
@@ -378,13 +387,18 @@ const DetailPeraturan = () => {
             {() => (
               <>
                 <div className="flex w-full justify-center">
-                  {pdfUrl || pdf ? (
+                  {pdfUrl ? (
                     <embed
-                      src={pdfUrl || pdf}
+                      src={pdfUrl}
                       type="application/pdf"
                       width="100%"
                       height="500px"
                     />
+                  ) : null}
+                  {pdf ? (
+                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                      <Viewer fileUrl={pdf} />;
+                    </Worker>
                   ) : null}
                 </div>
                 <Input
