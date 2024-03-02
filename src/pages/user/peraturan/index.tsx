@@ -1,8 +1,8 @@
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+// import {
+//   Carousel,
+//   CarouselContent,
+//   CarouselItem,
+// } from "@/components/ui/carousel";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,21 +14,26 @@ import {
 import { Peraturan, getPeraturan } from "../../../utils/apis/peraturan";
 import { useEffect, useState } from "react";
 
-import Autoplay from "embla-carousel-autoplay";
+// import Autoplay from "embla-carousel-autoplay";
 import { Button } from "../../../components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import Loading from "@/components/shared/Loading";
 import { MyTable } from "../../../components/admin/table";
-import image1 from "@/assets/image1.jpeg";
-import image2 from "@/assets/image2.jpg";
-import image3 from "@/assets/image3.jpg";
-import image4 from "@/assets/image4.jpg";
+import { useToast } from "@/components/ui/use-toast";
+
+// import image1 from "@/assets/image1.jpeg";
+// import image2 from "@/assets/image2.jpg";
+// import image3 from "@/assets/image3.jpg";
+// import image4 from "@/assets/image4.jpg";
 
 // import { useNavigate } from "react-router-dom";
 
 const PeraturanPage = () => {
   //   const navigate = useNavigate();
+  const { toast } = useToast();
   const [data, setData] = useState<Peraturan[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const columns: ColumnDef<Peraturan>[] = [
     {
@@ -94,11 +99,17 @@ const PeraturanPage = () => {
   ];
 
   const getData = async () => {
+    setLoading(true);
     try {
       const response = await getPeraturan();
       setData(response);
+      setLoading(false);
     } catch (error) {
-      console.log(error);
+      toast({
+        description: (error as Error).message,
+        variant: "destructive",
+      });
+      setLoading(false);
     }
   };
 
@@ -106,31 +117,33 @@ const PeraturanPage = () => {
     getData();
   }, []);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="flex flex-col">
-      <Carousel
-        plugins={[
-          Autoplay({
-            delay: 5000,
-          }),
-        ]}
-        className="w-full"
-      >
-        <CarouselContent>
-          <CarouselItem>
-            <img src={image1} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-          <CarouselItem>
-            <img src={image2} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-          <CarouselItem>
-            <img src={image3} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-          <CarouselItem>
-            <img src={image4} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
+      {/* <Carousel
+      plugins={[
+        Autoplay({
+          delay: 5000,
+        }),
+      ]}
+      className="w-full"
+    >
+      <CarouselContent>
+        <CarouselItem>
+          <img src={image1} className="w-full h-[60vh] object-cover" />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={image2} className="w-full h-[60vh] object-cover" />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={image3} className="w-full h-[60vh] object-cover" />
+        </CarouselItem>
+        <CarouselItem>
+          <img src={image4} className="w-full h-[60vh] object-cover" />
+        </CarouselItem>
+      </CarouselContent>
+    </Carousel> */}
       <div className="flex flex-col container gap-5 mt-10">
         <h1 className="text-2xl">Peraturan</h1>
         <MyTable

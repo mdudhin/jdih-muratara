@@ -6,14 +6,17 @@ import {
 } from "../ui/dropdown-menu";
 
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 import { useToken } from "@/utils/context/token";
 
 const Navbar = () => {
   const { token } = useToken();
   return (
-    <div className="bg-red-500 flex flex-row justify-between items-center py-4 px-5 sticky top-0 z-50">
-      <div className="text-white">JDIH Musi Rawas Utara</div>
-      <div className="flex flex-row gap-5">
+    <div className="bg-gray-800 flex flex-row justify-center items-center py-4 px-5 sticky top-0 z-50">
+      <div className="flex flex-row gap-8 items-center">
+        <Link to={"/"} className="text-white">
+          <img src={logo} alt="logo" className=" h-10 object-cover" />
+        </Link>
         <Link
           to={"/"}
           className="text-base text-white cursor-pointer hover:text-gray-300"
@@ -32,28 +35,34 @@ const Navbar = () => {
         >
           Peraturan
         </Link>
-      </div>
-      {token ? (
         <Link
-          to={"/admin"}
+          to={"/article"}
           className="text-base text-white cursor-pointer hover:text-gray-300"
         >
-          Admin
+          Article
         </Link>
-      ) : (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <div className="text-base text-white cursor-pointer hover:text-gray-300">
-              Admin
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="mr-2">
-            <DropdownMenuItem>
-              <Link to={"/login"}>Masuk</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
+        {token ? (
+          <Link
+            to={"/admin"}
+            className="text-base text-white cursor-pointer hover:text-gray-300"
+          >
+            Admin
+          </Link>
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="text-base text-white cursor-pointer hover:text-gray-300">
+                Admin
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mr-2">
+              <DropdownMenuItem>
+                <Link to={"/login"}>Masuk</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+      </div>
     </div>
   );
 };
