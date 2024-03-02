@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/shared/custom-formfield";
@@ -21,9 +22,8 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const DetailPeraturan = () => {
   const navigate = useNavigate();
@@ -379,9 +379,9 @@ const DetailPeraturan = () => {
               <>
                 <div className="flex w-full justify-center">
                   {pdfUrl || pdf ? (
-                    <embed
+                    <iframe
                       src={pdfUrl || pdf}
-                      type="application/pdf"
+                      title="PDF Viewer"
                       width="100%"
                       height="500px"
                     />
