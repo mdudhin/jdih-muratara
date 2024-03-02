@@ -36,7 +36,10 @@ const Home = () => {
       />
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="absolute inset-0 flex flex-col justify-center items-center h-screen gap-10">
-        <img src={logo} className="h-52" />
+        <img
+          src={logo}
+          className="h-52 transition-transform transform hover:scale-110 cursor-pointer"
+        />
         <div className="flex flex-row gap-10">
           {menu.map((item: Menu, index: number) => (
             <Link to={item.path} className="flex flex-col gap-3 items-center">
@@ -53,58 +56,6 @@ const Home = () => {
           ))}
         </div>
       </div>
-      {/* <Carousel
-        plugins={[
-          Autoplay({
-            delay: 5000,
-          }),
-        ]}
-        className="w-full"
-      >
-        <CarouselContent>
-          <CarouselItem>
-            <img src={image1} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-          <CarouselItem>
-            <img src={image2} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-          <CarouselItem>
-            <img src={image3} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-          <CarouselItem>
-            <img src={image4} className="w-full h-[60vh] object-cover" />
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
-      <div className="container flex flex-col gap-5 mt-10">
-        <h1 className="text-2xl">Semua Artikel</h1>
-        <div className="grid grid-cols-2 gap-4">
-          {articles.map((item) => (
-            <Card key={item.id} className="">
-              <CardHeader>
-                <CardTitle>{item.title}</CardTitle>
-                <CardDescription className="flex flex-col gap-2">
-                  <div className="flex flex-row justify-between">
-                    <p className="font-semibold text-sm">{item.date}</p>
-                    <p className="font-semibold text-sm">{item.location}</p>
-                  </div>
-                  <p>
-                    {item.description.length > 80
-                      ? item.description.slice(0, 80) + "..."
-                      : item.description}
-                  </p>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <img
-                  src={item.image}
-                  className="w-full h-[50vh] object-cover"
-                />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };
