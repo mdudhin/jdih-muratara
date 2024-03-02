@@ -29,7 +29,6 @@ import { Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-
 const DetailPeraturan = () => {
   const navigate = useNavigate();
   // const { action } = useParams();
@@ -389,9 +388,7 @@ const DetailPeraturan = () => {
               <>
                 <div className="flex w-full justify-center">
                   {pdfUrl ? (
-                    <embed
-                      src={pdfUrl}
-                      type="application/pdf"
+                    <embed src={pdfUrl} type="application/pdf" />
                   ) : null}
                   {pdf ? (
                     <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
