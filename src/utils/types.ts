@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 type Article = {
   id: number;
   title: string;
@@ -7,4 +9,11 @@ type Article = {
   location: string;
 };
 
-export type { Article };
+type Menu = {
+  icon: LucideIcon;
+  title: string;
+  color: string;
+  path: string;
+};
+
+export type { Article, Menu };

@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/shared/custom-formfield";
@@ -21,13 +22,13 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast";
 import { Worker } from "@react-pdf-viewer/core";
 import { Viewer } from "@react-pdf-viewer/core";
 // Import the Viewer styles
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 
 const DetailPeraturan = () => {
   const navigate = useNavigate();
@@ -391,9 +392,6 @@ const DetailPeraturan = () => {
                     <embed
                       src={pdfUrl}
                       type="application/pdf"
-                      width="100%"
-                      height="500px"
-                    />
                   ) : null}
                   {pdf ? (
                     <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">

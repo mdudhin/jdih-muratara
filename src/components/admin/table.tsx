@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 
 import {
@@ -31,7 +29,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { Combobox } from "../shared/ComboBox";
+import { Combobox } from "@/components/shared/Combobox";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -119,7 +117,7 @@ export function MyTable(props: Props) {
           <div className="w-2" />
           <Combobox
             items={filter}
-            onChange={(item) => {
+            onChange={(item: any) => {
               const newSelectedFilter = item ? item.value : "";
               table.getColumn(selectedFilter)?.setFilterValue("");
               setSelectedFilter(newSelectedFilter);
