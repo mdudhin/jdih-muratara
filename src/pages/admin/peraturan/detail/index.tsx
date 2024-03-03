@@ -1,6 +1,3 @@
-// Import the Viewer styles
-import "@react-pdf-viewer/core/lib/styles/index.css";
-
 import { Form, FormControl } from "@/components/ui/form";
 import {
   PeraturanSchema,
@@ -22,10 +19,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/shared/custom-formfield";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Viewer } from "@react-pdf-viewer/core";
-import { Worker } from "@react-pdf-viewer/core";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +32,8 @@ const DetailPeraturan = () => {
   const { toast } = useToast();
   const { id } = useParams();
   const [pdf, setPdf] = useState("");
+  const [pdfBody, setPdfBody] = useState("");
+  console.log(pdfBody);
   const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<PeraturanSchema>({
@@ -57,6 +54,7 @@ const DetailPeraturan = () => {
       note: "",
       file: "",
     },
+    mode: "onChange",
   });
 
   const fileWatcher = form.watch("file");
@@ -95,7 +93,6 @@ const DetailPeraturan = () => {
     setLoading(true);
     try {
       const result = await getPeraturanId(id as string);
-      console.log(result);
       form.setValue("jenis_peraturan", result?.jenis_peraturan as string);
       form.setValue("bentuk_peraturan", result?.bentuk_peraturan as string);
       form.setValue("judul", result?.judul as string);
@@ -112,7 +109,8 @@ const DetailPeraturan = () => {
       form.setValue("sumber", result?.sumber as string);
       form.setValue("status", result?.status as string);
       form.setValue("note", result?.note as string);
-
+      setPdfBody(result.file);
+      console.log(result.note);
       const url = await fetchPdf(result.file);
       setPdf(url || "");
       setLoading(false);
@@ -130,7 +128,6 @@ const DetailPeraturan = () => {
       const response = await fetch(file, {
         method: "GET",
       });
-
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       return url;
@@ -141,6 +138,14 @@ const DetailPeraturan = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      form.setValue("mode", "edit");
+    } else {
+      form.setValue("mode", "create");
+    }
+  }, []);
 
   useEffect(() => {
     if (fileWatcher?.length > 0) {
@@ -401,16 +406,27 @@ const DetailPeraturan = () => {
           >
             {() => (
               <>
-                <div className="flex w-full justify-center">
+                <div className="flex w-full justify-center h-[750px]">
                   {pdfUrl ? (
-                    <embed src={pdfUrl} type="application/pdf" />
-                  ) : null}
-                  {pdf ? (
-                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                      <Viewer fileUrl={pdf} />
-                    </Worker>
+                    <embed
+                      src={pdfUrl}
+                      type="application/pdf"
+                      className="w-full"
+                    />
+                  ) : pdf ? (
+                    <embed
+                      src={pdf}
+                      type="application/pdf"
+                      className="w-full"
+                    />
                   ) : null}
                 </div>
+                <Trash2
+                  className="size-8 text-red-500 cursor-pointer"
+                  onClick={() => {
+                    return form.resetField("file"), setPdfUrl(`${pdf}`);
+                  }}
+                />
                 <Input
                   {...form.register("file")}
                   id="image"

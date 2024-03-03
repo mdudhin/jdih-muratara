@@ -1,14 +1,16 @@
 import { MyTable } from "@/components/admin/table";
 import { Button } from "@/components/ui/button";
+import { Username } from "@/utils/apis/peraturan";
 import { getAllUser } from "@/utils/apis/peraturan/api";
 import { CREATE } from "@/utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState<[{ username: string }]>([{ username: "" }]);
+  const [data, setData] = useState<Username[]>([]);
 
   const columns: ColumnDef<string>[] = [
     {
@@ -20,7 +22,16 @@ const Register = () => {
       accessorKey: "username",
       header: "Username",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("username")} </div>
+        <div className="capitalize w-96">{row.getValue("username")} </div>
+      ),
+    },
+    {
+      accessorKey: "createdAt",
+      header: "Created At",
+      cell: ({ row }) => (
+        <div className="capitalize">
+          {moment(row.getValue("createdAt")).format("DD MMM YYYY")}
+        </div>
       ),
     },
   ];

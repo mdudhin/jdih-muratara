@@ -3,6 +3,7 @@ import {
   PeraturanSchema,
   peraturanSchema,
   NewPeraturan,
+  Username,
 } from "./type";
 
 import {
@@ -12,7 +13,7 @@ import {
   getPeraturanId,
 } from "./api";
 
-export type { PeraturanSchema, Peraturan, NewPeraturan };
+export type { PeraturanSchema, Peraturan, NewPeraturan, Username };
 export {
   peraturanSchema,
   getPeraturan,

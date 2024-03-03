@@ -2,7 +2,7 @@ import * as z from "zod";
 
 const ACCEPTED_PDF_TYPES = ["application/pdf"];
 
-export const peraturanSchema = z.object({
+export const basePeraturanSchema = z.object({
   jenis_peraturan: z.string().min(1, "Jenis peraturan is required"),
   bentuk_peraturan: z.string().min(1, "Bentuk Peraturan is required"),
   judul: z.string().min(1, "Judul is required"),
@@ -16,18 +16,47 @@ export const peraturanSchema = z.object({
   sumber: z.string().min(1, "Sumber is required"),
   status: z.string().min(1, "Status is required"),
   note: z.string().optional().or(z.literal("")),
-  file: z
-    .any()
-    .refine((file) => file?.length == 1, "PDF is required.")
-    .refine(
-      (file) => ACCEPTED_PDF_TYPES.includes(file?.[0]?.type),
-      "Only .pdf formats are supported"
-    )
-    .refine((file) => file[0]?.size <= 10000000, `Max PDF size is 10MB`)
-    .optional()
-    .or(z.literal("")),
 });
 
+export const createPeraturanSchema = z
+  .object({
+    mode: z.literal("create"),
+    file: z
+      .any()
+      .refine((file) => file?.length == 1, "PDF is required.")
+      .refine(
+        (file) => ACCEPTED_PDF_TYPES.includes(file?.[0]?.type),
+        "Only .pdf formats are supported"
+      )
+      .refine((file) => file[0]?.size <= 10000000, `Max PDF size is 10MB`)
+      .optional(),
+  })
+  .merge(basePeraturanSchema);
+
+export const editPeraturanSchema = z
+  .object({
+    mode: z.literal("edit"),
+    file: z
+      .any()
+      .refine(
+        (file) =>
+          !file[0] ||
+          file[0].type === "" ||
+          ACCEPTED_PDF_TYPES.includes(file?.[0]?.type),
+        "Only .pdf formats are supported"
+      )
+      .refine(
+        (file) => !file[0] || file[0]?.size <= 10000000,
+        `Max PDF size is 10MB`
+      )
+      .optional(),
+  })
+  .merge(basePeraturanSchema);
+
+export const peraturanSchema = z.discriminatedUnion("mode", [
+  createPeraturanSchema,
+  editPeraturanSchema,
+]);
 export type PeraturanSchema = z.infer<typeof peraturanSchema>;
 
 export interface Peraturan {
@@ -113,4 +142,10 @@ export interface Options {
   _schemaDelimiter: string;
   raw: boolean;
   attributes: string[];
+}
+
+export interface Username {
+  id: string;
+  username: string;
+  CreatedAt: string;
 }
