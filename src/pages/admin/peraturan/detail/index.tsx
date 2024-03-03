@@ -421,12 +421,15 @@ const DetailPeraturan = () => {
                     />
                   ) : null}
                 </div>
-                <Trash2
-                  className="size-8 text-red-500 cursor-pointer"
-                  onClick={() => {
-                    return form.resetField("file"), setPdfUrl(`${pdf}`);
-                  }}
-                />
+                {pdfUrl ? (
+                  <Trash2
+                    className="size-8 text-red-500 cursor-pointer"
+                    onClick={() => {
+                      return form.resetField("file"), setPdfUrl(`${pdf}`);
+                    }}
+                  />
+                ) : null}
+
                 <Input
                   {...form.register("file")}
                   id="image"
