@@ -1,3 +1,6 @@
+// Import the Viewer styles
+import "@react-pdf-viewer/core/lib/styles/index.css";
+
 import { Form, FormControl } from "@/components/ui/form";
 import {
   PeraturanSchema,
@@ -21,12 +24,10 @@ import CustomFormField from "@/components/shared/custom-formfield";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Viewer } from "@react-pdf-viewer/core";
+import { Worker } from "@react-pdf-viewer/core";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
-import { Worker } from "@react-pdf-viewer/core";
-import { Viewer } from "@react-pdf-viewer/core";
-// Import the Viewer styles
-import "@react-pdf-viewer/core/lib/styles/index.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const DetailPeraturan = () => {
@@ -111,12 +112,9 @@ const DetailPeraturan = () => {
       form.setValue("sumber", result?.sumber as string);
       form.setValue("status", result?.status as string);
       form.setValue("note", result?.note as string);
-      const blob = new Blob([result.file], {
-        type: "application/pdf",
-      });
-      const url = URL.createObjectURL(blob);
-      setPdf(url);
-      console.log(url);
+
+      const url = await fetchPdf(result.file);
+      setPdf(url || "");
       setLoading(false);
     } catch (error) {
       toast({
@@ -124,6 +122,23 @@ const DetailPeraturan = () => {
         variant: "destructive",
       });
       setLoading(false);
+    }
+  };
+
+  const fetchPdf = async (file: any) => {
+    try {
+      const response = await fetch(file, {
+        method: "GET",
+      });
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      return url;
+    } catch (error) {
+      toast({
+        description: (error as Error).message,
+        variant: "destructive",
+      });
     }
   };
 
@@ -392,7 +407,7 @@ const DetailPeraturan = () => {
                   ) : null}
                   {pdf ? (
                     <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                      <Viewer fileUrl={pdf} />;
+                      <Viewer fileUrl={pdf} />
                     </Worker>
                   ) : null}
                 </div>
