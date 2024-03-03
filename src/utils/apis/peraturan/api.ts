@@ -1,6 +1,6 @@
 import { PeraturanSchema } from ".";
 import axiosWithConfig from "../axiosWithConfig";
-import { DataValues } from "./type";
+import { DataValues, Username } from "./type";
 
 export const getPeraturan = async (searchBy?: string, search?: string) => {
   try {
@@ -54,8 +54,13 @@ export const editPeraturan = async (id: string, body: PeraturanSchema) => {
   formData.append("pemrakarsa", body.pemrakarsa);
   formData.append("sumber", body.sumber);
   formData.append("status", body.status);
-  formData.append("note", body.note);
-  formData.append("file", body.file[0]);
+  if (body.note) {
+    formData.append("note", body.note);
+  }
+  if (body.file[0]) {
+    formData.append("file", body.file[0]);
+  }
+
   try {
     const response = await axiosWithConfig.put(
       `api/data-hukum/${id}`,
@@ -88,7 +93,7 @@ export const deletePeraturan = async (id: string) => {
 export const getAllUser = async () => {
   try {
     const response = await axiosWithConfig.get(`/api/user/all-user`);
-    return response.data.data as [{ username: string }];
+    return response.data.data as Username[];
   } catch (error: any) {
     throw new Error(error.message);
   }
