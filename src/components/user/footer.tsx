@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white p-4">
+    <footer className="bg-red-500 text-white p-4">
       <div className="container mx-auto">
         <p className="text-center">
           &copy; 2024 JDIH Musi Rawas Utara. All rights reserved.

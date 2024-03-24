@@ -1,3 +1,4 @@
+import { CREATE, EDIT } from "@/utils/constants";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,14 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { NewPeraturan, getPeraturan } from "@/utils/apis/peraturan";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
+import AlertDelete from "@/components/shared/AlertDialog";
 import { Button } from "@/components/ui/button";
-import { CREATE, EDIT } from "@/utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { MyTable } from "@/components/admin/table";
-import AlertDelete from "@/components/shared/AlertDialog";
-import { useNavigate, useParams } from "react-router-dom";
 import { deletePeraturan } from "@/utils/apis/peraturan/api";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -185,6 +185,7 @@ const PeraturanPage = () => {
         ]}
         searchBy={searchBy}
         search={search}
+        path="/admin/peraturan/"
       />
     </div>
   );

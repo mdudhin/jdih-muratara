@@ -18,8 +18,9 @@ import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import Loading from "@/components/shared/Loading";
+// import Loading from "@/components/shared/Loading";
 import { MyTable } from "../../../components/admin/table";
+import { useParams } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 // import image1 from "@/assets/image1.jpeg";
@@ -33,7 +34,8 @@ const PeraturanPage = () => {
   //   const navigate = useNavigate();
   const { toast } = useToast();
   const [data, setData] = useState<Peraturan[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
+  const { searchBy, search } = useParams();
 
   const columns: ColumnDef<Peraturan>[] = [
     {
@@ -99,27 +101,25 @@ const PeraturanPage = () => {
   ];
 
   const getData = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
-      const response = await getPeraturan();
+      const response = await getPeraturan(searchBy as string, search as string);
       setData(response);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       toast({
         description: (error as Error).message,
         variant: "destructive",
       });
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchBy, search]);
 
-  return loading ? (
-    <Loading />
-  ) : (
+  return (
     <div className="flex flex-col">
       {/* <Carousel
       plugins={[
@@ -153,7 +153,11 @@ const PeraturanPage = () => {
             { label: "Title Peraturan", value: "judul" },
             { label: "Type Peraturan", value: "jenis_peraturan" },
             { label: "Tahun", value: "tahun" },
+            { label: "Status Peraturan", value: "status" },
           ]}
+          searchBy={searchBy}
+          search={search}
+          path="/peraturan/"
         />
       </div>
     </div>

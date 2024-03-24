@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import {
-  // ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -26,13 +25,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { Combobox } from "@/components/shared/Combobox";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 interface Filter {
   value: string;
@@ -45,10 +44,11 @@ interface Props {
   filter?: Filter[];
   searchBy?: string;
   search?: string;
+  path?: string;
 }
 
 export function MyTable(props: Props) {
-  const { columns, data, filter, searchBy, search } = props;
+  const { columns, data, filter, searchBy, search, path } = props;
   const navigate = useNavigate();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -69,7 +69,7 @@ export function MyTable(props: Props) {
     const newValue = event.target.value;
     const sanitizedValue = newValue.replace(/ /g, "%20");
     table.getColumn(selectedFilter)?.setFilterValue(newValue);
-    navigate(`/admin/peraturan/${selectedFilter}/${sanitizedValue}`);
+    navigate(`${path}${selectedFilter}/${sanitizedValue}`);
   };
   useEffect(() => {
     if (searchBy) {

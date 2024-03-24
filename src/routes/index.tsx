@@ -17,15 +17,15 @@ import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/",
+    path: "/:searchBy?/:search?",
     element: <LayoutUser />,
     children: [
       {
-        path: "article",
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "berita",
         element: <ArticlePage />,
       },
       {
@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
         element: <ProfilPage />,
       },
       {
-        path: "peraturan",
+        path: "peraturan/:searchBy?/:search?",
         element: <PeraturanUserPage />,
       },
     ],

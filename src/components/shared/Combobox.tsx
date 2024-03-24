@@ -26,10 +26,16 @@ interface Props {
   items: Item[];
   placeHolder?: string;
   onChange?: (selectedItem: Item | undefined) => void;
+  className?: string;
 }
 
 export function Combobox(props: Props) {
-  const { items = [], placeHolder = "Select Value...", onChange } = props;
+  const {
+    items = [],
+    placeHolder = "Select Value...",
+    onChange,
+    className = "",
+  } = props;
 
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<Item>();
@@ -49,7 +55,7 @@ export function Combobox(props: Props) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className={`w-[200px] justify-between ${className}`}
         >
           {value ? value.label : placeHolder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
