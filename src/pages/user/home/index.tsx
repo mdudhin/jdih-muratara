@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { NewPeraturan, getPeraturan } from "@/utils/apis/peraturan";
 import { useEffect, useState } from "react";
 
+import BarChart from "@/components/shared/bar-chart";
 import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/shared/Combobox";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ const Home = () => {
   const [placeholder, setPlaceholder] = useState<string>("Select Filter");
   const [selectedFilter, setSelectedFilter] = useState<string>("judul");
   const [search, setSearch] = useState<string>("");
+  const [datasets, setDatasets] = useState<any[]>([]);
 
   const getRegulationCount = async () => {
     try {
@@ -100,6 +102,109 @@ const Home = () => {
     try {
       const response = await getPeraturan();
       setData(response);
+
+      const suratEdaran: NewPeraturan[] = response.filter(
+        (item: NewPeraturan) => item.jenis_peraturan === "Surat Edaran"
+      );
+      const peraturanDaerah = response.filter(
+        (item: NewPeraturan) => item.jenis_peraturan === "Peraturan Daerah"
+      );
+      const peraturanBupati = response.filter(
+        (item: NewPeraturan) => item.jenis_peraturan === "Peraturan Bupati"
+      );
+      const keputusanBupati = response.filter(
+        (item: NewPeraturan) => item.jenis_peraturan === "Keputusan Bupati"
+      );
+
+      const berlakuSuratEdaran = suratEdaran.filter(
+        (item: NewPeraturan) => item.status === "Berlaku"
+      ).length;
+
+      const berlakuPeraturanDaerah = peraturanDaerah.filter(
+        (item: NewPeraturan) => item.status === "Berlaku"
+      ).length;
+
+      const berlakuPeraturanBupati = peraturanBupati.filter(
+        (item: NewPeraturan) => item.status === "Berlaku"
+      ).length;
+
+      const berlakuKeputusanBupati = keputusanBupati.filter(
+        (item: NewPeraturan) => item.status === "Berlaku"
+      ).length;
+
+      const berlaku = [
+        berlakuSuratEdaran,
+        berlakuPeraturanDaerah,
+        berlakuPeraturanBupati,
+        berlakuKeputusanBupati,
+      ];
+
+      const diubahSuratEdaran = suratEdaran.filter(
+        (item: NewPeraturan) => item.status === "Diubah"
+      ).length;
+
+      const diubahPeraturanDaerah = peraturanDaerah.filter(
+        (item: NewPeraturan) => item.status === "Diubah"
+      ).length;
+
+      const diubahPeraturanBupati = peraturanBupati.filter(
+        (item: NewPeraturan) => item.status === "Diubah"
+      ).length;
+
+      const diubahKeputusanBupati = keputusanBupati.filter(
+        (item: NewPeraturan) => item.status === "Diubah"
+      ).length;
+
+      const diubah = [
+        diubahSuratEdaran,
+        diubahPeraturanDaerah,
+        diubahPeraturanBupati,
+        diubahKeputusanBupati,
+      ];
+
+      const dicabutSuratEdaran = suratEdaran.filter(
+        (item: NewPeraturan) => item.status === "Dicabut"
+      ).length;
+
+      const dicabutPeraturanDaerah = peraturanDaerah.filter(
+        (item: NewPeraturan) => item.status === "Dicabut"
+      ).length;
+
+      const dicabutPeraturanBupati = peraturanBupati.filter(
+        (item: NewPeraturan) => item.status === "Dicabut"
+      ).length;
+
+      const dicabutKeputusanBupati = keputusanBupati.filter(
+        (item: NewPeraturan) => item.status === "Dicabut"
+      ).length;
+
+      const dicabut = [
+        dicabutSuratEdaran,
+        dicabutPeraturanDaerah,
+        dicabutPeraturanBupati,
+        dicabutKeputusanBupati,
+      ];
+
+      const dataSet = [
+        {
+          label: "Berlaku",
+          data: berlaku,
+          backgroundColor: " rgba(75, 192, 192, 0.5)",
+        },
+        {
+          label: "Diubah",
+          data: diubah,
+          backgroundColor: "rgba(53, 162, 235, 0.5)",
+        },
+        {
+          label: "Dicabut",
+          data: dicabut,
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+      ];
+
+      setDatasets(dataSet);
+
       // setLoading(false);
     } catch (error) {
       toast({
@@ -117,6 +222,7 @@ const Home = () => {
   const searchPeraturan = () => {
     navigate(`/peraturan/${selectedFilter}/${search}`);
   };
+
   return (
     <div className="flex flex-col">
       <img src={image1} className="w-full h-[90vh] object-cover" />
@@ -142,7 +248,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="flex flex-col  px-24 py-10">
+      <section className="flex flex-col px-24 py-10">
         <div className="text-2xl font-bold mb-6 text-center">
           Silahkan Cari Produk Hukum dan Informasi Hukum
         </div>
@@ -198,6 +304,21 @@ const Home = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="flex flex-col px-24 py-10 ">
+        <div className="bg-white shadow-md rounded-sm p-10">
+          <div className="text-2xl font-bold mb-10">Grafik Produk Hukum</div>
+          <BarChart
+            datasets={datasets}
+            labels={[
+              "Surat Edaran",
+              "Peraturan Daerah",
+              "Peraturan Bupati",
+              "Keputusan Bupati",
+            ]}
+          />
         </div>
       </section>
     </div>
