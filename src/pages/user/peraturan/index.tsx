@@ -120,7 +120,7 @@ const PeraturanPage = () => {
   }, [searchBy, search]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col py-20">
       {/* <Carousel
       plugins={[
         Autoplay({
@@ -144,7 +144,7 @@ const PeraturanPage = () => {
         </CarouselItem>
       </CarouselContent>
     </Carousel> */}
-      <div className="flex flex-col container gap-5 mt-10">
+      <div className="flex flex-col container gap-5">
         <h1 className="text-2xl">Peraturan</h1>
         <MyTable
           columns={columns}

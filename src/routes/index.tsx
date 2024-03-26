@@ -13,6 +13,7 @@ import Profile from "../pages/admin/profile";
 import ProtectedRoutes from "./protectedRoutes";
 import Register from "../pages/admin/register";
 import RegisterPage from "../pages/auth/register";
+import Sejarah from "@/pages/user/sejarah";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "peraturan/:searchBy?/:search?",
         element: <PeraturanUserPage />,
+      },
+      {
+        path: "sejarah",
+        element: <Sejarah />,
       },
     ],
   },

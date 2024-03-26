@@ -25,7 +25,7 @@ const Navbar = () => {
           <Link to={"/"} className="text-base cursor-pointer">
             Beranda
           </Link>
-          <Link to={"/profil"} className="text-base cursor-pointer">
+          <Link to={"/sejarah"} className="text-base cursor-pointer">
             Sejarah
           </Link>
           <DropdownMenu>

@@ -59,8 +59,8 @@ const articles: Article[] = [
 
 const ArticlePage = () => {
   return (
-    <div className="container flex flex-col gap-5 mt-10">
-      <h1 className="text-2xl">Semua Artikel</h1>
+    <div className="container flex flex-col gap-5 py-20">
+      <h1 className="text-2xl">Semua Berita</h1>
       <div className="grid grid-cols-2 gap-4">
         {articles.map((item) => (
           <Card key={item.id} className="">

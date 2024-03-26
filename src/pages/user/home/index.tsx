@@ -1,15 +1,73 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { FileText, Gavel, Scale } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { NewPeraturan, getPeraturan } from "@/utils/apis/peraturan";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 
+import { Article } from "@/utils/types";
 import BarChart from "@/components/shared/bar-chart";
 import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/shared/Combobox";
 import { Input } from "@/components/ui/input";
+import article1 from "@/assets/article1.jpg";
+import article2 from "@/assets/article2.webp";
+import article3 from "@/assets/article3.jpg";
+import article4 from "@/assets/article4.jpg";
+import article5 from "@/assets/article5.jpg";
 import { getPeraturanLength } from "@/utils/apis/peraturan/api";
 import image1 from "@/assets/image1.jpeg";
 import { toast } from "@/components/ui/use-toast";
+
+const articles: Article[] = [
+  {
+    id: 1,
+    title: "Article 1",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    image: article1,
+    date: "5 January 2024",
+    location: "Palembang",
+  },
+  {
+    id: 2,
+    title: "Article 2",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus veritatis, aliquam ipsum aut nihil iure assumenda possimus ipsa fuga hic reprehenderit molestiae quas modi illo corrupti minima, animi, incidunt ut.",
+    image: article2,
+    date: "15 January 2024",
+    location: "Palembang",
+  },
+  {
+    id: 3,
+    title: "Article 3",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    image: article3,
+    date: "25 January 2024",
+    location: "Palembang",
+  },
+  {
+    id: 4,
+    title: "Article 4",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    image: article4,
+    date: "5 February 2024",
+    location: "Palembang",
+  },
+  {
+    id: 5,
+    title: "Article 5",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    image: article5,
+    date: "15 February 2024",
+    location: "Palembang",
+  },
+];
 
 const filters = [
   { label: "Title Peraturan", value: "judul" },
@@ -320,6 +378,39 @@ const Home = () => {
             ]}
           />
         </div>
+      </section>
+
+      <section className="flex flex-col py-10 px-24">
+        <div className="text-2xl font-bold mb-6">Berita Terkini</div>
+        <ScrollArea className="w-full whitespace-nowrap rounded-md">
+          <div className="flex w-max space-x-4 py-5">
+            {articles.map((item) => (
+              <Card key={item.id} className="">
+                <CardHeader>
+                  <CardTitle>{item.title}</CardTitle>
+                  <CardDescription className="flex flex-col gap-2">
+                    <div className="flex flex-row justify-between">
+                      <p className="font-semibold text-sm">{item.date}</p>
+                      <p className="font-semibold text-sm">{item.location}</p>
+                    </div>
+                    <p>
+                      {item.description.length > 80
+                        ? item.description.slice(0, 80) + "..."
+                        : item.description}
+                    </p>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <img
+                    src={item.image}
+                    className="w-full h-[50vh] object-cover"
+                  />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </section>
     </div>
   );
