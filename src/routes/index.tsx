@@ -1,4 +1,5 @@
 import ArticlePage from "../pages/user/article";
+import BantuanHukumPage from "@/pages/user/bantuan-hukum";
 import DashboardPage from "../pages/admin/dashboard";
 import DetailPeraturanPage from "@/pages/admin/peraturan/detail";
 import DetailRegister from "@/pages/admin/register/detail";
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "sejarah",
         element: <Sejarah />,
+      },
+      {
+        path: "bantuan-hukum",
+        element: <BantuanHukumPage />,
       },
     ],
   },

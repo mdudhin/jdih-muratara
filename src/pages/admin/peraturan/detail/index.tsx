@@ -1,4 +1,5 @@
 import { Form, FormControl } from "@/components/ui/form";
+import { Loader2, Trash2 } from "lucide-react";
 import {
   PeraturanSchema,
   createPeraturan,
@@ -19,7 +20,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/shared/custom-formfield";
 import { Input } from "@/components/ui/input";
-import { Loader2, Trash2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
@@ -31,9 +31,6 @@ const DetailPeraturan = () => {
   const [pdfUrl, setPdfUrl] = useState<string>("");
   const { toast } = useToast();
   const { id } = useParams();
-  const [pdf, setPdf] = useState("");
-  const [pdfBody, setPdfBody] = useState("");
-  console.log(pdfBody);
   const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<PeraturanSchema>({
@@ -109,10 +106,8 @@ const DetailPeraturan = () => {
       form.setValue("sumber", result?.sumber as string);
       form.setValue("status", result?.status as string);
       form.setValue("note", result?.note as string);
-      setPdfBody(result.file);
-      console.log(result.note);
       const url = await fetchPdf(result.file);
-      setPdf(url || "");
+      setPdfUrl(url || "");
       setLoading(false);
     } catch (error) {
       toast({
@@ -406,26 +401,21 @@ const DetailPeraturan = () => {
           >
             {() => (
               <>
-                <div className="flex w-full justify-center h-[750px]">
-                  {pdfUrl ? (
+                {pdfUrl && (
+                  <div className="flex w-full justify-center h-[750px]">
                     <embed
                       src={pdfUrl}
                       type="application/pdf"
                       className="w-full"
                     />
-                  ) : pdf ? (
-                    <embed
-                      src={pdf}
-                      type="application/pdf"
-                      className="w-full"
-                    />
-                  ) : null}
-                </div>
+                  </div>
+                )}
+
                 {pdfUrl ? (
                   <Trash2
                     className="size-8 text-red-500 cursor-pointer"
                     onClick={() => {
-                      return form.resetField("file"), setPdfUrl(`${pdf}`);
+                      return form.resetField("file"), setPdfUrl("");
                     }}
                   />
                 ) : null}

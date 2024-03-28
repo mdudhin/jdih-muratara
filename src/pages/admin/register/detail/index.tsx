@@ -1,15 +1,18 @@
+import { UserSchema, registerUser, userSchema } from "@/utils/apis/user";
+
+import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/shared/custom-formfield";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { UserSchema, userSchema, registerUser } from "@/utils/apis/user";
-import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const DetailRegister = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
@@ -34,6 +37,7 @@ const DetailRegister = () => {
       toast({
         description: "Insert data successfully",
       });
+      navigate(-1);
     } catch (error) {
       toast({
         description: (error as Error).message,
