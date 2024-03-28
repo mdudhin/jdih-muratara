@@ -1,14 +1,13 @@
 import { FileText, Gavel, Scale } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { getPeraturanLength } from "@/utils/apis/peraturan/api";
 import image1 from "@/assets/tingey-injury-law-firm-veNb0DDegzE-unsplash.jpg";
 import image2 from "@/assets/tingey-injury-law-firm-yCdPU73kGSc-unsplash.jpg";
 
 const BantuanHukumPage = () => {
-  const navigate = useNavigate();
   const [peraturanBupatiCount, setPeraturanBupatiCount] = useState<number>(0);
   const [peraturanDaerahCount, setPeraturanDaerahCount] = useState<number>(0);
   const [keputsanBupatiCount, setKeputsanBupatiCount] = useState<number>(0);
