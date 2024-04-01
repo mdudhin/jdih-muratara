@@ -157,7 +157,7 @@ const PeraturanPage = () => {
           ]}
           searchBy={searchBy}
           search={search}
-          path="/peraturan/"
+          path="/produk-hukum/"
         />
       </div>
     </div>

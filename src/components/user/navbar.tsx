@@ -34,22 +34,22 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-2">
               <DropdownMenuItem>
-                <Link to={"/peraturan/jenis_peraturan/peraturan%20daerah"}>
+                <Link to={"/produk-hukum/jenis_peraturan/peraturan%20daerah"}>
                   Peraturan Daerah
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to={"/peraturan/jenis_peraturan/peraturan%20bupati"}>
+                <Link to={"/produk-hukum/jenis_peraturan/peraturan%20bupati"}>
                   Peraturan Bupati
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to={"/peraturan/jenis_peraturan/keputusan%20bupati"}>
+                <Link to={"/produk-hukum/jenis_peraturan/keputusan%20bupati"}>
                   Keputusan Bupati
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to={"/peraturan/jenis_peraturan/surat%20edaran"}>
+                <Link to={"/produk-hukum/jenis_peraturan/surat%20edaran"}>
                   Surat Edaran
                 </Link>
               </DropdownMenuItem>

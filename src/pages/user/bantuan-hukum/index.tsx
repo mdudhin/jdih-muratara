@@ -51,7 +51,7 @@ const BantuanHukumPage = () => {
       unit: "Surat Edaran",
       color: "bg-yellow-500",
       icon: FileText,
-      path: "peraturan/jenis_peraturan/surat%20edaran",
+      path: "produk-hukum/jenis_peraturan/surat%20edaran",
     },
     {
       title: "Total Peraturan Daerah",
@@ -59,7 +59,7 @@ const BantuanHukumPage = () => {
       unit: "Peraturan Daerah",
       color: "bg-red-500",
       icon: Scale,
-      path: "peraturan/jenis_peraturan/peraturan%20daerah",
+      path: "produk-hukum/jenis_peraturan/peraturan%20daerah",
     },
     {
       title: "Total Peraturan Bupati",
@@ -67,7 +67,7 @@ const BantuanHukumPage = () => {
       unit: "Peraturan Bupati",
       color: "bg-blue-500",
       icon: Scale,
-      path: "peraturan/jenis_peraturan/peraturan%20bupati",
+      path: "produk-hukum/jenis_peraturan/peraturan%20bupati",
     },
     {
       title: "Total Keputusan Bupati",
@@ -75,7 +75,7 @@ const BantuanHukumPage = () => {
       unit: "Keputusan Bupati",
       color: "bg-purple-500",
       icon: Gavel,
-      path: "peraturan/jenis_peraturan/keputusan%20bupati",
+      path: "produk-hukum/jenis_peraturan/keputusan%20bupati",
     },
   ];
   return (

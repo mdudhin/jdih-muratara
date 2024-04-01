@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
         element: <ProfilPage />,
       },
       {
-        path: "peraturan/:searchBy?/:search?",
+        path: "produk-hukum/:searchBy?/:search?",
         element: <PeraturanUserPage />,
       },
       {
