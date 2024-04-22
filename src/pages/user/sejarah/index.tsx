@@ -3,7 +3,7 @@ const Sejarah = () => {
     <div className="px-24 py-20 space-y-6">
       <h1 className="text-3xl font-bold">Sejarah Kabupaten Muratara</h1>
 
-      <p className="text-justify">
+      {/* <p className="text-justify">
         Kabupaten Musi Rawas Utara adalah kabupaten yang terletak paling barat
         di Provinsi Sumatera Selatan dengan luas wilayah 600.865,51 Ha.
         Kabupaten Musi Rawas hasil dari pemekaran Kabupaten Musi Rawas. Geografi
@@ -68,7 +68,7 @@ const Sejarah = () => {
         tentang Pembentukan Kabupaten Musi Rawas Utara di Provinsi Sumatera
         Selatan, termuat dalam Lembaran Negara Republik Indonesia Tahun 2013
         Nomor 112.
-      </p>
+      </p> */}
     </div>
   );
 };
