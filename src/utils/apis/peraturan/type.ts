@@ -28,7 +28,7 @@ export const createPeraturanSchema = z
         (file) => ACCEPTED_PDF_TYPES.includes(file?.[0]?.type),
         "Only .pdf formats are supported"
       )
-      .refine((file) => file[0]?.size <= 10000000, `Max PDF size is 10MB`)
+      // .refine((file) => file[0]?.size <= 10000000, `Max PDF size is 10MB`)
       .optional(),
   })
   .merge(basePeraturanSchema);
@@ -45,10 +45,10 @@ export const editPeraturanSchema = z
           ACCEPTED_PDF_TYPES.includes(file?.[0]?.type),
         "Only .pdf formats are supported"
       )
-      .refine(
-        (file) => !file[0] || file[0]?.size <= 10000000,
-        `Max PDF size is 10MB`
-      )
+      // .refine(
+      //   (file) => !file[0] || file[0]?.size <= 10000000,
+      //   `Max PDF size is 10MB`
+      // )
       .optional(),
   })
   .merge(basePeraturanSchema);
