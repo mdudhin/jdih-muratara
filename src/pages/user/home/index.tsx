@@ -344,7 +344,7 @@ const Home = () => {
             Produk Hukum Terbaru
           </div>
           <div className="grid grid-cols-2 w-full gap-10 mt-10">
-            {data.map((item) => (
+            {data.slice(0,4).map((item) => (
               <div
                 className="flex flex-col cursor-pointer"
                 key={item.id}
