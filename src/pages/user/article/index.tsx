@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useEffect, useState } from "react";
 
 import { Article } from "@/utils/types";
 import article1 from "@/assets/article1.jpg";
@@ -12,6 +13,7 @@ import article2 from "@/assets/article2.webp";
 import article3 from "@/assets/article3.jpg";
 import article4 from "@/assets/article4.jpg";
 import article5 from "@/assets/article5.jpg";
+import { getArtikel } from "@/utils/apis/artikel";
 
 const articles: Article[] = [
   {
@@ -58,28 +60,44 @@ const articles: Article[] = [
 ];
 
 const ArticlePage = () => {
+  const [data, setData] = useState<any[]>([]);
+
+  const getData = async () => {
+    try {
+      const response = await getArtikel();
+
+      setData(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="container flex flex-col gap-5 py-20">
       <h1 className="text-2xl">Semua Berita</h1>
       <div className="grid grid-cols-2 gap-4">
-        {articles.map((item) => (
+        {data.map((item) => (
           <Card key={item.id} className="">
             <CardHeader>
-              <CardTitle>{item.title}</CardTitle>
+              <CardTitle>{item.judul}</CardTitle>
               <CardDescription className="flex flex-col gap-2">
                 <div className="flex flex-row justify-between">
-                  <p className="font-semibold text-sm">{item.date}</p>
-                  <p className="font-semibold text-sm">{item.location}</p>
+                  <p className="font-semibold text-sm">{item.createdAt}</p>
+                  {/* <p className="font-semibold text-sm">{item.location}</p> */}
                 </div>
                 <p>
-                  {item.description.length > 80
-                    ? item.description.slice(0, 80) + "..."
-                    : item.description}
+                  {item.deskripsi.length > 80
+                    ? item.deskripsi.slice(0, 80) + "..."
+                    : item.deskripsi}
                 </p>
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <img src={item.image} className="w-full h-[50vh] object-cover" />
+              {console.log(item.file)}
+              <img src={item.file} className="w-full h-[50vh] object-cover" />
             </CardContent>
           </Card>
         ))}

@@ -1,6 +1,8 @@
 import ArticlePage from "../pages/user/article";
+import ArtikelPage from "@/pages/admin/artikel";
 import BantuanHukumPage from "@/pages/user/bantuan-hukum";
 import DashboardPage from "../pages/admin/dashboard";
+import DetailArtikel from "@/pages/admin/artikel/detail";
 import DetailPeraturanPage from "@/pages/admin/peraturan/detail";
 import DetailRegister from "@/pages/admin/register/detail";
 import HomePage from "../pages/user/home";
@@ -78,6 +80,14 @@ export const router = createBrowserRouter([
           {
             path: "registeruser/detail/:action",
             element: <DetailRegister />,
+          },
+          {
+            path: "artikel/:searchBy?/:search?",
+            element: <ArtikelPage />,
+          },
+          {
+            path: "artikel/detail/:id?",
+            element: <DetailArtikel />,
           },
         ],
       },

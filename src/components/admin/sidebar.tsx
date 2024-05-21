@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+
 import { useState } from "react";
 
 const Sidebar = () => {
@@ -22,6 +23,18 @@ const Sidebar = () => {
           label="Dokumen Hukum"
           items={[{ path: "/admin/peraturan", label: "Peraturan" }]}
         />
+        <li>
+          <Link
+            to={"/admin/artikel"}
+            className={
+              location.pathname === "/admin/artikel"
+                ? "flex items-center p-2 rounded-lg bg-gray-100 text-gray-900 group"
+                : "flex items-center p-2 rounded-lg text-white hover:bg-gray-100 hover:text-gray-900 group"
+            }
+          >
+            <span className="ms-3">Artikel</span>
+          </Link>
+        </li>
         <li>
           <Link
             to={"/admin/registeruser"}
