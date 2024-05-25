@@ -7,57 +7,7 @@ import {
 } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 
-import { Article } from "@/utils/types";
-import article1 from "@/assets/article1.jpg";
-import article2 from "@/assets/article2.webp";
-import article3 from "@/assets/article3.jpg";
-import article4 from "@/assets/article4.jpg";
-import article5 from "@/assets/article5.jpg";
 import { getArtikel } from "@/utils/apis/artikel";
-
-const articles: Article[] = [
-  {
-    id: 1,
-    title: "Article 1",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: article1,
-    date: "5 January 2024",
-    location: "Palembang",
-  },
-  {
-    id: 2,
-    title: "Article 2",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus veritatis, aliquam ipsum aut nihil iure assumenda possimus ipsa fuga hic reprehenderit molestiae quas modi illo corrupti minima, animi, incidunt ut.",
-    image: article2,
-    date: "15 January 2024",
-    location: "Palembang",
-  },
-  {
-    id: 3,
-    title: "Article 3",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: article3,
-    date: "25 January 2024",
-    location: "Palembang",
-  },
-  {
-    id: 4,
-    title: "Article 4",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: article4,
-    date: "5 February 2024",
-    location: "Palembang",
-  },
-  {
-    id: 5,
-    title: "Article 5",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    image: article5,
-    date: "15 February 2024",
-    location: "Palembang",
-  },
-];
 
 const ArticlePage = () => {
   const [data, setData] = useState<any[]>([]);
@@ -96,7 +46,6 @@ const ArticlePage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {console.log(item.file)}
               <img src={item.file} className="w-full h-[50vh] object-cover" />
             </CardContent>
           </Card>
