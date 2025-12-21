@@ -8,8 +8,10 @@ import {
 import { useEffect, useState } from "react";
 
 import { getArtikel } from "@/utils/apis/artikel";
+import { useNavigate } from "react-router-dom";
 
 const ArticlePage = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState<any[]>([]);
 
   const getData = async () => {
@@ -30,7 +32,10 @@ const ArticlePage = () => {
       <h1 className="text-2xl">Semua Berita</h1>
       <div className="grid grid-cols-2 gap-4">
         {data.map((item) => (
-          <Card key={item.id} className="">
+          <Card
+            key={item.id}
+            onClick={() => navigate(`/berita/detail/${item.id}`)}
+          >
             <CardHeader>
               <CardTitle>{item.judul}</CardTitle>
               <CardDescription className="flex flex-col gap-2">

@@ -1,4 +1,5 @@
 import ArticlePage from "../pages/user/article";
+import DetailArticle from "../pages/user/article/detail";
 import ArtikelPage from "@/pages/admin/artikel";
 import BantuanHukumPage from "@/pages/user/bantuan-hukum";
 import DashboardPage from "../pages/admin/dashboard";
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "berita",
         element: <ArticlePage />,
+      },
+      {
+        path: "berita/detail/:id?",
+        element: <DetailArticle />,
       },
       {
         path: "profil",
