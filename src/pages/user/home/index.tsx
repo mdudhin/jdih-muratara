@@ -123,7 +123,7 @@ const Home = () => {
         (item: NewPeraturan) => item.jenis_peraturan === "Peraturan Bupati"
       );
       const keputusanBupati = response.filter(
-        (item: NewPeraturan) => item.jenis_peraturan === "Keputusan Bupati"
+        (item: NewPeraturan) => item.jenis_peraturan === "Keputusan bupati"
       );
 
       const berlakuSuratEdaran = suratEdaran.filter(

@@ -1,9 +1,8 @@
 import { getArtikelId } from "@/utils/apis/artikel";
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/id"; // Import locale Indonesia
-import { ArrowLeft } from "lucide-react"; // Pastikan install lucide-react atau ganti icon lain
 
 // Definisikan tipe data agar autocomplete jalan (Opsional tapi disarankan)
 interface ArticleType {
@@ -17,7 +16,6 @@ interface ArticleType {
 
 const DetailArticle = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   // Ubah initial state jadi null, bukan array []
   const [article, setArticle] = useState<ArticleType | null>(null);
