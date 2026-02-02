@@ -22,6 +22,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { MyTable } from "../../../components/admin/table";
 import { useParams } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { newCountAccess } from "@/utils/apis/peraturan/api";
 
 // import image1 from "@/assets/image1.jpeg";
 // import image2 from "@/assets/image2.jpg";
@@ -89,7 +90,10 @@ const PeraturanPage = () => {
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={() => window.open(data.file, "_blank")}
+                onClick={() => {
+                  getCountAccessRule();
+                  window.open(data.file, "_blank");
+                }}
               >
                 View
               </DropdownMenuItem>
@@ -118,6 +122,14 @@ const PeraturanPage = () => {
   useEffect(() => {
     getData();
   }, [searchBy, search]);
+
+  const getCountAccessRule = async () => {
+    try {
+      await newCountAccess();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex flex-col py-20">

@@ -1,14 +1,13 @@
+import { getNewCountAccess } from "@/utils/apis/peraturan/api";
 import { Mail, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
-
-import { getCountAccess } from "@/utils/apis/peraturan/api";
 
 const Footer = () => {
   const [count, setCount] = useState<number>(0);
   const getCount = async () => {
     try {
-      const response = await getCountAccess();
-      setCount(response.hitCount);
+      const response = await getNewCountAccess();
+      setCount(response?.hitCount);
     } catch (error) {
       console.log(error);
     }

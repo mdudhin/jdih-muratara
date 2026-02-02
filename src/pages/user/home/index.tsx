@@ -15,7 +15,7 @@ import BarChart from "@/components/shared/bar-chart";
 import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/shared/Combobox";
 import { Input } from "@/components/ui/input";
-import { getPeraturanLength } from "@/utils/apis/peraturan/api";
+import { getPeraturanLength, newCountAccess } from "@/utils/apis/peraturan/api";
 import image1 from "@/assets/image1.jpeg";
 import { toast } from "@/components/ui/use-toast";
 import { getArtikel } from "@/utils/apis/artikel";
@@ -249,6 +249,14 @@ const Home = () => {
     navigate(`/produk-hukum/${selectedFilter}/${search}`);
   };
 
+  const getCountAccessRule = async () => {
+    try {
+      await newCountAccess();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex flex-col">
       <img src={image1} className="w-full h-[90vh] object-cover" />
@@ -316,7 +324,10 @@ const Home = () => {
               <div
                 className="flex flex-col cursor-pointer"
                 key={item.id}
-                onClick={() => window.open(item.file, "_blank")}
+                onClick={() => {
+                  getCountAccessRule();
+                  window.open(item.file, "_blank");
+                }}
               >
                 <div className="border border-red-600 text-red-600 px-2 py-1 rounded-sm text-xs w-fit">
                   {item.jenis_peraturan}

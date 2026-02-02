@@ -131,3 +131,40 @@ export const getPeraturanLength = async (
     throw Error(error.response.data.message);
   }
 };
+
+export const newCountAccess = async () => {
+  try {
+    const res = await fetch("https://jdihmuratarakab.com/increment.php", {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    console.log("ini dari api");
+    const data = await res.json();
+    return { hitCount: data.total };
+  } catch (error) {
+    console.error("Error incrementing access count:", error);
+    return null;
+  }
+};
+
+export const getNewCountAccess = async () => {
+  try {
+    const res = await fetch("https://jdihmuratarakab.com/count_acces.php", {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return { hitCount: data.total };
+  } catch (error) {
+    console.error("Error incrementing access count:", error);
+    return null;
+  }
+};
